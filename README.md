@@ -18,7 +18,13 @@ The playbook will attempt to configure your system to meet as many of the CIS se
 How do I run it?
 --
 
-After cloning the repository to your server, simply run:
+**Don't run this blindly on an actively running system.**  The playbook will make ***serious*** modifications to your system that could affect its availability.
+
+Perform a dry run first:
+
+    ansible-playbook -i hosts -C localhost.yaml
+
+To apply the changes simply run:
 
     ansible-playbook -i hosts localhost.yaml
 
