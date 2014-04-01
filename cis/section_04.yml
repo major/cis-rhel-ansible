@@ -1,0 +1,73 @@
+---
+# CIS Benchmarks Section 4
+
+  - name: 4.1.1 Disable IP Forwarding
+    sysctl: name=net.ipv4.ip_forward value=0 state=present
+  - name: 4.1.2 Disable Send Packet Redirects
+    sysctl: name=net.ipv4.conf.all.send_redirects value=0 state=present
+  - name: 4.1.2 Disable Send Packet Redirects
+    sysctl: name=net.ipv4.conf.default.send_redirects value=0 state=present
+  - name: 4.2.1 Disable Source Routed Packet Acceptance
+    sysctl: name=net.ipv4.conf.all.accept_source_route value=0 state=present
+  - name: 4.2.1 Disable Source Routed Packet Acceptance
+    sysctl: name=net.ipv4.conf.default.accept_source_route value=0 state=present
+  - name: 4.2.2 Disable ICMP Redirect Acceptance
+    sysctl: name=net.ipv4.conf.all.accept_redirects value=0 state=present
+  - name: 4.2.2 Disable ICMP Redirect Acceptance
+    sysctl: name=net.ipv4.conf.default.accept_redirects value=0 state=present
+  - name: 4.2.3 Disable Secure ICMP Redirect Acceptance
+    sysctl: name=net.ipv4.conf.all.secure_redirects value=0 state=present
+  - name: 4.2.3 Disable Secure ICMP Redirect Acceptance
+    sysctl: name=net.ipv4.conf.default.secure_redirects value=0 state=present
+  - name: 4.2.4 Log Suspicious Packets
+    sysctl: name=net.ipv4.conf.all.log_martians value=1 state=present
+  - name: 4.2.4 Log Suspicious Packets
+    sysctl: name=net.ipv4.conf.default.log_martians value=1 state=present
+  - name: 4.2.5 Enable Ignore Broadcast Requests
+    sysctl: name=net.ipv4.icmp_echo_ignore_broadcasts value=1 state=present
+  - name: 4.2.6 Enable Bad Error Message Protection
+    sysctl: name=net.ipv4.icmp_ignore_bogus_error_responses value=1 state=present
+  - name: 4.2.7 Enable RFC-recommended Source Route Validation
+    sysctl: name=net.ipv4.conf.all.rp_filter value=1 state=present
+  - name: 4.2.7 Enable RFC-recommended Source Route Validation
+    sysctl: name=net.ipv4.conf.default.rp_filter value=1 state=present
+  - name: 4.2.8 Enable TCP SYN Cookies
+    sysctl: name=net.ipv4.tcp_syncookies value=1 state=present
+  - name: 4.4.1.1 Disable IPv6 Router Advertisements
+    sysctl: name=net.ipv6.conf.all.accept_ra value=0 state=present
+  - name: 4.4.1.1 Disable IPv6 Router Advertisements
+    sysctl: name=net.ipv6.conf.default.accept_ra value=0 state=present
+  - name: 4.4.1.2 Disable IPv6 Redirect Acceptance
+    sysctl: name=net.ipv6.conf.all.accept_redirects value=0 state=present
+  - name: 4.4.1.2 Disable IPv6 Redirect Acceptance
+    sysctl: name=net.ipv6.conf.default.accept_redirects value=0 state=present
+  - name: 4.4.2 Disable IPv6
+    lineinfile: state=present dest=/etc/sysconfig/network regexp=^NETWORKING_IPV6 line=NETWORKING_IPV6=no
+  - name: 4.4.2 Disable IPv6
+    lineinfile: state=present dest=/etc/sysconfig/network regexp=^IPV6INIT line=IPV6INIT=no
+  - name: 4.4.2 Disable IPv6
+    lineinfile: state=present create=yes dest=/etc/modprobe.d/ipv6.conf line="options ipv6 disable=1"
+  - name: 4.4.2 Disable IPv6
+    service: name=ip6tables enabled=no state=stopped
+  - name: 4.5.1 Install TCP Wrappers
+    yum: name=tcp_wrappers state=present
+  - name: 4.5.2 Create /etc/hosts.allow
+    lineinfile: state=present create=yes dest=/etc/hosts.allow regexp=^ALL line=ALL:{{ tcp_allow | default("ALL") }}
+  - name: 4.5.3 Verify Permissions on /etc/hosts.allow
+    file: path=/etc/hosts.allow mode=0644
+  - name: 4.5.4 Create /etc/hosts.deny
+    lineinfile: state=present create=yes dest=/etc/hosts.deny line=ALL:ALL
+  - name: 4.5.5 Verify Permissions on /etc/hosts.deny
+    file: path=/etc/hosts.deny mode=0644
+  - name: 4.6.1 Disable DCCP
+    lineinfile: state=present create=yes dest=/etc/modprobe.d/CIS.conf line="install dccp /bin/true"
+  - name: 4.6.2 Disable SCTP
+    lineinfile: state=present dest=/etc/modprobe.d/CIS.conf line="install sctp /bin/true"
+  - name: 4.6.3 Disable RDS
+    lineinfile: state=present dest=/etc/modprobe.d/CIS.conf line="install rds /bin/true"
+  - name: 4.6.4 Disable TIPC
+    lineinfile: state=present dest=/etc/modprobe.d/CIS.conf line="install tipc /bin/true"
+  - name: 4.7 Enable IPtables
+    service: name=iptables enabled=yes state=started
+  - name: Route Flush
+    command: /sbin/sysctl -w net.ipv6.route.flush=1
