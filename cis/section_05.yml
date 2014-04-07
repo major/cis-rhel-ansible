@@ -1,0 +1,28 @@
+---
+# CIS Benchmarks Section 5
+
+  - name: 5.1.1 Install the rsyslog package
+    yum: name=rsyslog state=present
+  - name: 5.1.2 Activate the rsyslog Service
+    service: name=syslog enabled=no state=stopped
+  - name: 5.1.2 Activate the rsyslog Service
+    service: name=rsyslog enabled=yes state=started
+  - name: 5.1.3 Configure /etc/rsyslog.conf 
+    copy: src=etc/rsyslog.conf dest=/etc/rsyslog.conf owner=root group=root mode=0644
+  - name: 5.1.4 Create and Set Permissions on rsyslog Log Files
+    file: path=/var/log/{{ item }} state=touch owner=root group=wheel mode=0640
+    with_items:
+        - messages
+        - kern.log
+        - daemon.log
+        - syslog
+        - unused.log
+  - name: 5.1.5 Configure rsyslog to Send Logs to a Remote Log Host
+    lineinfile: state=present regexp="^\*\.\*" line="*.* @@{{ rsyslog_dest }}"
+    when: rsyslog_dest is defined
+  - name: 5.1.6 Accept Remote rsyslog Messages Only on Designated Log Hosts 
+    lineinfile: state=present line="$ModLoad imtcp.so"
+    when: rsyslog_host
+  - name: 5.1.6 Accept Remote rsyslog Messages Only on Designated Log Hosts 
+    lineinfile: state=present line="$InputTCPServerRun 514"
+    when: rsyslog_host
