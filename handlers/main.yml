@@ -1,0 +1,3 @@
+---
+  - name: Reload auditd Rules
+    command: /usr/bin/pkill -HUP -P 1 auditd
