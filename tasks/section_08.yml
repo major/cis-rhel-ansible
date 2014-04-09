@@ -1,5 +1,5 @@
 ---
-# CIS Benchmarks Section 5
+# CIS Benchmarks Section 8
 
   - name: 8.1 Set Warning Banner for Standard Login Services
     copy: src=etc/{{ item }} dest=/etc/{{ item }}

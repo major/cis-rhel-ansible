@@ -10,3 +10,9 @@ Section 8
 
 8.2: Satisfied by 8.1.
 8.3: Not addressing graphical desktop environments.
+
+Section 9
+
+9.1.1: Not a scorable item and requires human interpretation.  This is best handled by AIDE or other file integrity monitoring systems.
+9.1.10 - 9.1.14: This is best handled by AIDE or other file integrity monitoring systems.
+9.2: These items all require human intervention to resolve.  None of these will be a concern while applying CIS to a vanilla RHEL6 install.

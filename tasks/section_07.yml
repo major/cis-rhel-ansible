@@ -1,5 +1,5 @@
 ---
-# CIS Benchmarks Section 5
+# CIS Benchmarks Section 7
 
   - name: 7.1.1 Set Password Expiration Days
     lineinfile: dest=/etc/login.defs regexp="^PASS_MAX_DAYS " line="PASS_MAX_DAYS 90"

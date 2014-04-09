@@ -1,5 +1,5 @@
 ---
-# CIS Benchmarks Section 5
+# CIS Benchmarks Section 6
 
   - name: 6.1.1 Enable anacron Daemon
     yum: name=cronie-anacron state=present
