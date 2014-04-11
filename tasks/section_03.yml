@@ -9,11 +9,49 @@
     yum: name="@X Window System" state=absent
   - name: 3.3 Disable Avahi Server
     command: chkconfig avahi-daemon off removes=/etc/rc.d/rc3.d/S24avahi-daemon
+  - name: 3.4 Disable Print Server - CUPS
+    service: name=cups state=stopped enabled=no
   - name: 3.5 Remove DHCP Server
     yum: name=dhcp state=absent
   - name: 3.6 Configure Network Time Protocol (ipv4)
     lineinfile: dest=/etc/ntp.conf state=present regexp="^restrict default" line="restrict default kod nomodify notrap nopeer noquery" insertafter=EOF
   - name: 3.6 Configure Network Time Protocol (ipv6)
     lineinfile: dest=/etc/ntp.conf state=present regexp="^restrict -6 default" line="restrict -6 default kod nomodify notrap nopeer noquery" insertafter=EOF
+  - name: 3.7 Remove LDAP
+    yum: name=openldap-clients state=absent
+    when: not ldap_client
+  - name: 3.7 Remove LDAP
+    yum: name=openldap-servers state=absent
+    when: not ldap_server
+  - name: 3.8 Disable NFS and RPC 
+    service: name={{ item }} state=stopped enabled=no
+    with_items:
+      - nfslock
+      - rpcgssd
+      - rpcbind
+      - rpcidmapd
+      - rpcsvcgssd
+    when: not nfs
+  - name: 3.9 Remove DNS Server
+    yum: name=bind state=absent
+    when: not dns
+  - name: 3.10 Remove FTP Server
+    yum: name=vsftpd state=absent
+    when: not ftp
+  - name: 3.11 Remove HTTP Server
+    yum: name=httpd state=absent
+    when: not httpd
+  - name: 3.12 Remove Dovecot
+    yum: name=dovecot state=absent
+    when: not dovecot
+  - name: 3.13 Remove Samba
+    yum: name=samba state=absent
+    when: not samba
+  - name: 3.14 Remove HTTP Proxy Server
+    yum: name=squid state=absent
+    when: not squid
+  - name: 3.15 Remove SNMP Server
+    yum: name=net-snmp state=absent
+    when: not snmp
   - name: 3.16 Configure Mail Transfer Agent for Local-Only Mode
     lineinfile: dest=/etc/postfix/main.cf state=present regexp="^inet_interfaces" line="inet_interfaces = localhost" insertafter=EOF

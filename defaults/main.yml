@@ -1,0 +1,10 @@
+dns: no
+dovecot: no
+ftp: no
+httpd: no
+ldap_client: no
+ldap_server: no
+nfs: no
+samba: no
+snmp: no
+squid: no
