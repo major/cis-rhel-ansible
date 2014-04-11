@@ -21,4 +21,4 @@
     lineinfile: dest=/etc/profile regexp="^umask " line="umask 77"
   - name: 7.5 Lock Inactive User Accounts
     command: /usr/sbin/useradd -D -f 35
-    when: lock_inactive is defined and lock_inactive
+    when: lock_inactive

@@ -1,3 +1,14 @@
+# Auditd
+action_mail_acct: "root"
+admin_space_left_action: "halt"
+max_log_file: 100
+max_log_file_action: "keep_logs"
+space_left_action: "email"
+
+# Rsyslog
+rsyslog_host: no
+
+# Services
 dns: no
 dovecot: no
 ftp: no
@@ -8,3 +19,6 @@ nfs: no
 samba: no
 snmp: no
 squid: no
+
+# Users
+lock_inactive: no
