@@ -18,6 +18,8 @@
   - name: 7.4 Set Default umask for Users
     lineinfile: dest=/etc/bashrc regexp="^umask " line="umask 77"
   - name: 7.4 Set Default umask for Users
+    file: state=touch path=/etc/profile.d/cis.sh
+  - name: 7.4 Set Default umask for Users
     lineinfile: dest=/etc/profile.d/cis.sh regexp="^umask " line="umask 77"
   - name: 7.5 Lock Inactive User Accounts
     command: /usr/sbin/useradd -D -f 35
