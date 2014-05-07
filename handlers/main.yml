@@ -1,5 +1,7 @@
 ---
   - name: Reload auditd Rules
     command: /usr/bin/pkill -HUP -P 1 auditd
+  - name: Reload prelinking
+    command: /usr/sbin/prelink -ua
   - name: Reload sshd
     command: /etc/init.d/sshd reload
