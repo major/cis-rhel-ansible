@@ -6,7 +6,7 @@
   - name: 3.2 Remove X Windows (runlevel 3)
     lineinfile: dest=/etc/inittab state=present regexp="^id:" line="id:3:initdefault:"
   - name: 3.2 Remove X Windows (remove package group)
-    yum: name="@X Window System" state=absent
+    yum: name=xorg-x11-server-common state=absent
   - name: 3.3 Disable Avahi Server
     command: chkconfig avahi-daemon off removes=/etc/rc.d/rc3.d/S24avahi-daemon
   - name: 3.4 Disable Print Server - CUPS

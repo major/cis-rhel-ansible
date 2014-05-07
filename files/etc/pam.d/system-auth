@@ -2,10 +2,7 @@
 # This file is auto-generated.
 # User changes will be destroyed the next time authconfig is run.
 auth        required                pam_env.so 
-auth        required                pam_faillock.so preauth audit silent deny=5 unlock_time=900 
-auth        [success=1 default=bad] pam_unix.so 
-auth        [default=die]           pam_faillock.so authfail audit deny=5 unlock_time=900 
-auth        sufficient              pam_faillock.so authsucc audit deny=5 unlock_time=900 
+auth        required                pam_tally2.so onerr=fail audit silent deny=5 unlock_time=900 
 auth        required                pam_deny.so 
 
 account     required      pam_unix.so
