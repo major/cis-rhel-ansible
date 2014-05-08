@@ -16,7 +16,7 @@
         - syslog
         - unused.log
   - name: 5.1.5 Configure rsyslog to Send Logs to a Remote Log Host
-    lineinfile: state=present regexp="^\*\.\*" line="*.* @@{{ rsyslog_dest }}"
+    lineinfile: state=present dest=/etc/rsyslog.conf regexp="^\*\.\*" line="*.* @@{{ rsyslog_dest }}"
     when: rsyslog_dest is defined
   - name: 5.1.6 Accept Remote rsyslog Messages Only on Designated Log Hosts
     lineinfile: state=present line="$ModLoad imtcp.so"
