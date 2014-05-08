@@ -71,3 +71,4 @@
     service: name=iptables enabled=yes state=started
   - name: Route Flush
     command: /sbin/sysctl -w net.ipv6.route.flush=1
+    ignore_errors: yes
