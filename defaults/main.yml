@@ -1,3 +1,6 @@
+# AIDE
+aide: yes
+
 # Auditd
 action_mail_acct: "root"
 admin_space_left_action: "halt"
