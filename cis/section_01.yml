@@ -1,11 +1,15 @@
 ---
 # CIS Benchmarks Section 1
-
+  - name: 1.3.1 Disable Prelinking
+    lineinfile: dest=/etc/sysconfig/prelink regexp=^PRELINKING= line=PRELINKING=no
+  - name: 1.3.1 Unlink
+    shell: /usr/sbin/prelink -ua && touch /etc/sysconfig/prelinking.disabled
+    creates: /etc/sysconfig/prelinking.disabled
   - name: 1.3.1 Install AIDE
     action: yum name=aide state=present
   - name: "EXTRA: Initializing AIDE if needed (takes a short while)"
     action: shell /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
-        creates=/var/lib/aide/aide.db.gz
+      creates=/var/lib/aide/aide.db.gz
   - name: 1.3.2 Implement Periodic Execution of File Integrity
     action: cron name="Run AIDE (CIS 1.3.2)" minute="0" hour="5" job="/usr/sbin/aide --check"
   - name: 1.4.2/1.4.3 Set the SELinux State/Policy (install targeted)
