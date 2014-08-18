@@ -36,15 +36,25 @@
   - name: 3.7 Remove LDAP
     yum: name=openldap-servers state=absent
     when: not ldap_server
-  - name: 3.8 Disable NFS and RPC 
+  - name: 3.8 Disable NFS and RPC (check for nfs-utils)
+    stat: path=/etc/init.d/nfslock
+    register: nfs_utils
+  - name: 3.8 Disable NFS and RPC (check for rpcbind)
+    stat: path=/etc/init.d/rpcbind
+    register: rpcbind
+  - name: 3.8 Disable NFS and RPC (nfs-utils services)
     service: name={{ item }} state=stopped enabled=no
     with_items:
       - nfslock
       - rpcgssd
-      - rpcbind
       - rpcidmapd
       - rpcsvcgssd
-    when: not nfs
+    when: nfs_utils.stat.exists
+  - name: 3.8 Disable NFS and RPC (rpcbind services)
+    service: name=rpcbind state=stopped enabled=no
+    when:
+      - rpcbind.stat.exists
+      - not nfs
   - name: 3.9 Remove DNS Server
     yum: name=bind state=absent
     when: not dns
