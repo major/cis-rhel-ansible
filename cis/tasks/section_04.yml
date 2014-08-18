@@ -4,43 +4,43 @@
   - name: 4.1.1 Disable IP Forwarding
     sysctl: name=net.ipv4.ip_forward value=0 state=present
   - name: 4.1.2 Disable Send Packet Redirects
-    sysctl: name=net.ipv4.conf.all.send_redirects value=0 state=present
+    sysctl: name=net.ipv4.conf.all.send_redirects value=0 state=present ignoreerrors=true
   - name: 4.1.2 Disable Send Packet Redirects
-    sysctl: name=net.ipv4.conf.default.send_redirects value=0 state=present
+    sysctl: name=net.ipv4.conf.default.send_redirects value=0 state=present ignoreerrors=true
   - name: 4.2.1 Disable Source Routed Packet Acceptance
-    sysctl: name=net.ipv4.conf.all.accept_source_route value=0 state=present
+    sysctl: name=net.ipv4.conf.all.accept_source_route value=0 state=present ignoreerrors=true
   - name: 4.2.1 Disable Source Routed Packet Acceptance
-    sysctl: name=net.ipv4.conf.default.accept_source_route value=0 state=present
+    sysctl: name=net.ipv4.conf.default.accept_source_route value=0 state=present ignoreerrors=true
   - name: 4.2.2 Disable ICMP Redirect Acceptance
-    sysctl: name=net.ipv4.conf.all.accept_redirects value=0 state=present
+    sysctl: name=net.ipv4.conf.all.accept_redirects value=0 state=present ignoreerrors=true
   - name: 4.2.2 Disable ICMP Redirect Acceptance
-    sysctl: name=net.ipv4.conf.default.accept_redirects value=0 state=present
+    sysctl: name=net.ipv4.conf.default.accept_redirects value=0 state=present ignoreerrors=true
   - name: 4.2.3 Disable Secure ICMP Redirect Acceptance
-    sysctl: name=net.ipv4.conf.all.secure_redirects value=0 state=present
+    sysctl: name=net.ipv4.conf.all.secure_redirects value=0 state=present ignoreerrors=true
   - name: 4.2.3 Disable Secure ICMP Redirect Acceptance
-    sysctl: name=net.ipv4.conf.default.secure_redirects value=0 state=present
+    sysctl: name=net.ipv4.conf.default.secure_redirects value=0 state=present ignoreerrors=true
   - name: 4.2.4 Log Suspicious Packets
-    sysctl: name=net.ipv4.conf.all.log_martians value=1 state=present
+    sysctl: name=net.ipv4.conf.all.log_martians value=1 state=present ignoreerrors=true
   - name: 4.2.4 Log Suspicious Packets
-    sysctl: name=net.ipv4.conf.default.log_martians value=1 state=present
+    sysctl: name=net.ipv4.conf.default.log_martians value=1 state=present ignoreerrors=true
   - name: 4.2.5 Enable Ignore Broadcast Requests
-    sysctl: name=net.ipv4.icmp_echo_ignore_broadcasts value=1 state=present
+    sysctl: name=net.ipv4.icmp_echo_ignore_broadcasts value=1 state=present ignoreerrors=true
   - name: 4.2.6 Enable Bad Error Message Protection
-    sysctl: name=net.ipv4.icmp_ignore_bogus_error_responses value=1 state=present
+    sysctl: name=net.ipv4.icmp_ignore_bogus_error_responses value=1 state=present ignoreerrors=true
   - name: 4.2.7 Enable RFC-recommended Source Route Validation
-    sysctl: name=net.ipv4.conf.all.rp_filter value=1 state=present
+    sysctl: name=net.ipv4.conf.all.rp_filter value=1 state=present ignoreerrors=true
   - name: 4.2.7 Enable RFC-recommended Source Route Validation
-    sysctl: name=net.ipv4.conf.default.rp_filter value=1 state=present
+    sysctl: name=net.ipv4.conf.default.rp_filter value=1 state=present ignoreerrors=true
   - name: 4.2.8 Enable TCP SYN Cookies
-    sysctl: name=net.ipv4.tcp_syncookies value=1 state=present
+    sysctl: name=net.ipv4.tcp_syncookies value=1 state=present ignoreerrors=true
   - name: 4.4.1.1 Disable IPv6 Router Advertisements
-    sysctl: name=net.ipv6.conf.all.accept_ra value=0 state=present
+    sysctl: name=net.ipv6.conf.all.accept_ra value=0 state=present ignoreerrors=true
   - name: 4.4.1.1 Disable IPv6 Router Advertisements
-    sysctl: name=net.ipv6.conf.default.accept_ra value=0 state=present
+    sysctl: name=net.ipv6.conf.default.accept_ra value=0 state=present ignoreerrors=true
   - name: 4.4.1.2 Disable IPv6 Redirect Acceptance
-    sysctl: name=net.ipv6.conf.all.accept_redirects value=0 state=present
+    sysctl: name=net.ipv6.conf.all.accept_redirects value=0 state=present ignoreerrors=true
   - name: 4.4.1.2 Disable IPv6 Redirect Acceptance
-    sysctl: name=net.ipv6.conf.default.accept_redirects value=0 state=present
+    sysctl: name=net.ipv6.conf.default.accept_redirects value=0 state=present ignoreerrors=true
   - name: 4.4.2 Disable IPv6
     lineinfile: state=present dest=/etc/sysconfig/network regexp=^NETWORKING_IPV6 line=NETWORKING_IPV6=no
   - name: 4.4.2 Disable IPv6
