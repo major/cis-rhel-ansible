@@ -28,6 +28,18 @@ To apply the changes simply run:
 
     ansible-playbook -i hosts playbook.yaml
 
+Tags are available for running a section at a time:
+
+    # Test only items from section 4
+    ansible-playbook -i hosts -C playbook.yml -t section4
+    
+    # Apply changes only from items in section 4
+    ansible-playbook -i hosts playbook.yml -t section4
+
+You can combine tags to run items from multiple sections:
+
+    ansible-playbook -i hosts playbook.yml -t "section4,section7"
+
 Something doesn't work. You're awful at ansible playbooks.
 --
 
