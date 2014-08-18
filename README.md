@@ -22,11 +22,11 @@ How do I run it?
 
 Perform a dry run first:
 
-    ansible-playbook -i hosts -C localhost.yaml
+    ansible-playbook -i hosts -C playbook.yaml
 
 To apply the changes simply run:
 
-    ansible-playbook -i hosts localhost.yaml
+    ansible-playbook -i hosts playbook.yaml
 
 Something doesn't work. You're awful at ansible playbooks.
 --
