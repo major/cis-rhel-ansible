@@ -9,9 +9,13 @@
     yum: name=xorg-x11-server-common state=absent
   - name: 3.3 Disable Avahi Server
     command: chkconfig avahi-daemon off removes=/etc/rc.d/rc3.d/S24avahi-daemon
+  - name: 3.4 Check to see if cups daemon is installed
+    stat: path=/etc/init.d/cups
+    register: cups_service
   - name: 3.4 Disable Print Server - CUPS
     service: name=cups state=stopped enabled=no
     ignore_errors: yes
+    when: cups_service.stat.exists
   - name: 3.5 Remove DHCP Server
     yum: name=dhcp state=absent
   - name: 3.6 Configure Network Time Protocol (ipv4)
