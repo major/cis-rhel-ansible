@@ -31,9 +31,12 @@
     lineinfile: state=present dest=/etc/modprobe.d/CIS.conf line="install udf /bin/true"
   - name: 1.2.3 Verify that gpgcheck is Globally Activated
     lineinfile: state=present dest=/etc/yum.conf regexp=^gpgcheck= line=gpgcheck=1
+  - name: 1.2.4 Check to see if rhnsd daemon is installed
+    stat: path=/etc/init.d/rhnsd
+    register: rhnsd_service
   - name: 1.2.4 Disable the rhnsd Daemon
     service: name=rhnsd enabled=no state=stopped
-    ignore_errors: yes
+    when: rhnsd_service.stat.exists
   - name: 1.3.1 Install AIDE
     action: yum pkg=aide state=present
     when: aide
