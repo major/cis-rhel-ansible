@@ -35,14 +35,14 @@
     service: name=rhnsd enabled=no state=stopped
     ignore_errors: yes
   - name: 1.3.1 Install AIDE
-    action: yum name=aide state=present
+    action: yum pkg=aide state=present
     when: aide
   - name: 1.3.1 Install AIDE (Initialize)
     command: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz' 
         creates=/var/lib/aide/aide.db.gz
     when: aide
   - name: 1.3.1 Install AIDE (Disable Prelinking)
-    lineinfile: state=present dest=/etc/sysconfig/prelink regexp=^PRELINKING= line=PRELINKING=no
+    lineinfile: state=present dest=/etc/sysconfig/prelink regexp=^PRELINKING= line=PRELINKING=no create=yes
     notify: Reload prelinking
     when: aide
   - name: 1.3.2 Implement Periodic Execution of File Integrity

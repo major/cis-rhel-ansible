@@ -1,7 +1,0 @@
----
-- hosts: localhost
-  connection: local
-  tasks:
-    - include: cis/section_01.yml
-    - include: cis/section_02.yml
-    - include: cis/section_03.yml
