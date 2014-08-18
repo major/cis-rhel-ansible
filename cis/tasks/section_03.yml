@@ -23,6 +23,10 @@
   - name: 3.5 Remove DHCP Server
     yum: name=dhcp state=absent
   - name: 3.6 Configure Network Time Protocol (ipv4)
+    yum: pkg=ntp state=present
+  - name: 3.6 Configure Network Time Protocol (ipv4)
+    service: name=ntpd state=started enabled=yes
+  - name: 3.6 Configure Network Time Protocol (ipv4)
     lineinfile: dest=/etc/ntp.conf state=present regexp="^restrict default" line="restrict default kod nomodify notrap nopeer noquery" insertafter=EOF
   - name: 3.6 Configure Network Time Protocol (ipv6)
     lineinfile: dest=/etc/ntp.conf state=present regexp="^restrict -6 default" line="restrict -6 default kod nomodify notrap nopeer noquery" insertafter=EOF
