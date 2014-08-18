@@ -61,6 +61,6 @@
   - name: 1.5.5 Disable Interactive Boot
     lineinfile: dest=/etc/sysconfig/init regexp=^PROMPT= line=PROMPT=no
   - name: 1.6.2 Configure ExecShield 
-    sysctl: name=kernel.exec-shield value=1 state=present
+    sysctl: name=kernel.exec-shield value=1 state=present ignoreerrors=yes
   - name: 1.6.3 Enable Randomized Virtual Memory Region Placement
-    sysctl: name=kernel.randomize_va_space value=2 state=present
+    sysctl: name=kernel.randomize_va_space value=2 state=present ignoreerrors=yes
