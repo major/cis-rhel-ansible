@@ -74,49 +74,6 @@
   - name: 1.1.17 Set sticky bit on all world-writeable directories
     debug: msg="Too destructive -- see notes"
 
-  - name: 1.1.18 Disable Mounting of cramfs Filesystems
-    lineinfile: >
-      state=present 
-      create=yes 
-      dest=/etc/modprobe.d/CIS.conf 
-      line="install cramfs /bin/true"
-  
-  - name: 1.1.19 Disable Mounting of freevxfs Filesystems
-    lineinfile: >
-      state=present 
-      dest=/etc/modprobe.d/CIS.conf 
-      line="install freevxfs /bin/true"
-  
-  - name: 1.1.20 Disable Mounting of jffs2 Filesystems
-    lineinfile: >
-      state=present 
-      dest=/etc/modprobe.d/CIS.conf 
-      line="install jffs2 /bin/true"
-  
-  - name: 1.1.21 Disable Mounting of hfs Filesystems
-    lineinfile: >
-      state=present 
-      dest=/etc/modprobe.d/CIS.conf 
-      line="install hfs /bin/true"
-
-  - name: 1.1.22 Disable Mounting of hfsplus Filesystems
-    lineinfile: >
-      state=present 
-      dest=/etc/modprobe.d/CIS.conf 
-      line="install hfsplus /bin/true"
-
-  - name: 1.1.23 Disable Mounting of squashfs Filesystems
-    lineinfile: >
-      state=present 
-      dest=/etc/modprobe.d/CIS.conf 
-      line="install squashfs /bin/true"
-
-  - name: 1.1.24 Disable Mounting of udf Filesystems
-    lineinfile: >
-      state=present 
-      dest=/etc/modprobe.d/CIS.conf 
-      line="install udf /bin/true"
-
   - name: 1.2.1 Configure connection to the RHN RPM repositories
     command: yum check-update
     when: ansible_distribution == "RedHat"
