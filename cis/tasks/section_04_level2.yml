@@ -1,0 +1,29 @@
+---
+
+  - name: 4.2.3 Disable Secure ICMP Redirect Acceptance
+    sysctl: >
+      name=net.ipv4.conf.all.secure_redirects
+      value=0
+      state=present
+      ignoreerrors=true
+
+  - name: 4.2.3 Disable Secure ICMP Redirect Acceptance
+    sysctl: >
+      name=net.ipv4.conf.default.secure_redirects
+      value=0
+      state=present
+      ignoreerrors=true
+
+  - name: 4.2.7 Enable RFC-recommended Source Route Validation
+    sysctl: >
+      name=net.ipv4.conf.all.rp_filter
+      value=1
+      state=present
+      ignoreerrors=true
+
+  - name: 4.2.7 Enable RFC-recommended Source Route Validation
+    sysctl: >
+      name=net.ipv4.conf.default.rp_filter
+      value=1
+      state=present
+      ignoreerrors=true
