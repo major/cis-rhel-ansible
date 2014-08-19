@@ -1,99 +1,241 @@
 ---
-# CIS Benchmarks Section 6
 
   - name: 6.1.1 Enable anacron Daemon
-    yum: name=cronie-anacron state=present
+    yum: >
+      name=cronie-anacron
+      state=present
+
   - name: 6.1.2 Enable crond Daemon
-    service: name=crond enabled=yes state=started
+    service: >
+      name=crond
+      enabled=yes
+      state=started
+
   - name: 6.1.3 Set User/Group Owner and Permission on /etc/anacrontab
-    file: path=/etc/anacrontab owner=root group=root mode=0600
+    file: >
+      path=/etc/anacrontab
+      owner=root
+      group=root
+      mode=0600
+
   - name: 6.1.4 Set User/Group Owner and Permission on /etc/crontab
-    file: path=/etc/crontab owner=root group=root mode=0600
+    file: >
+      path=/etc/crontab
+      owner=root
+      group=root
+      mode=0600
+
   - name: 6.1.5 Set User/Group Owner and Permission on /etc/cron.hourly
-    file: path=/etc/cron.hourly owner=root group=root mode=0600
+    file: >
+      path=/etc/cron.hourly
+      owner=root
+      group=root
+      mode=0600
+
   - name: 6.1.6 Set User/Group Owner and Permission on /etc/cron.daily 
-    file: path=/etc/cron.daily owner=root group=root mode=0600
+    file: >
+      path=/etc/cron.daily
+      owner=root
+      group=root
+      mode=0600
+
   - name: 6.1.7 Set User/Group Owner and Permission on /etc/cron.weekly 
-    file: path=/etc/cron.weekly owner=root group=root mode=0600
+    file: >
+      path=/etc/cron.weekly
+      owner=root
+      group=root
+      mode=0600
+
   - name: 6.1.8 Set User/Group Owner and Permission on /etc/cron.monthly
-    file: path=/etc/cron.monthly owner=root group=root mode=0600
+    file: >
+      path=/etc/cron.monthly
+      owner=root
+      group=root
+      mode=0600
+
   - name: 6.1.9 Set User/Group Owner and Permission on /etc/cron.d 
-    file: path=/etc/cron.d state=directory owner=root group=root mode=0700
+    file: >
+      path=/etc/cron.d
+      state=directory
+      owner=root
+      group=root
+      mode=0700
+
   - name: 6.1.10 Restrict at Daemon
-    file: path=/etc/at.deny state=absent
+    file: >
+      path=/etc/at.deny
+      state=absent
+
   - name: 6.1.10 Restrict at Daemon
-    file: path=/etc/at.allow state=touch owner=root group=root mode=0600
+    file: >
+      path=/etc/at.allow
+      state=touch
+      owner=root
+      group=root
+      mode=0600
+
   - name: 6.1.11 Restrict at/cron to Authorized Users 
-    file: path=/etc/cron.deny state=absent
+    file: >
+      path=/etc/cron.deny
+      state=absent
+
   - name: 6.1.11 Restrict at/cron to Authorized Users 
-    file: path=/etc/cron.allow state=touch owner=root group=root mode=0600
+    file: >
+      path=/etc/cron.allow
+      state=touch
+      owner=root
+      group=root
+      mode=0600
+
   - name: 6.2.1 Set SSH Protocol to 2
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^Protocol " line="Protocol 2"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^Protocol " line="Protocol 2"
     notify: Reload sshd
+
   - name: 6.2.2 Set LogLevel to INFO
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^LogLevel " line="LogLevel INFO"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^LogLevel "
+      line="LogLevel INFO"
     notify: Reload sshd
+
   - name: 6.2.3 Set Permissions on /etc/ssh/sshd_config
-    file: path=/etc/ssh/sshd_config owner=root group=root mode=0600
+    file: >
+      path=/etc/ssh/sshd_config
+      owner=root
+      group=root
+      mode=0600
     notify: Reload sshd
+
   - name: 6.2.4 Disable SSH X11 Forwarding
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^X11Forwarding " line="X11Forwarding no"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^X11Forwarding "
+      line="X11Forwarding no"
     notify: Reload sshd
+
   - name: 6.2.5 Set SSH MaxAuthTries to 4 or Less
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^MaxAuthTries " line="MaxAuthTries 4"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^MaxAuthTries "
+      line="MaxAuthTries 4"
     notify: Reload sshd
+
   - name: 6.2.6 Set SSH IgnoreRhosts to Yes
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^IgnoreRhosts " line="IgnoreRhosts yes"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^IgnoreRhosts "
+      line="IgnoreRhosts yes"
     notify: Reload sshd
+
   - name: 6.2.7 Set SSH HostbasedAuthentication to No
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^HostbasedAuthentication " line="HostbasedAuthentication no"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^HostbasedAuthentication "
+      line="HostbasedAuthentication no"
     notify: Reload sshd
+
   - name: 6.2.8 Disable SSH Root Login
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitRootLogin " line="PermitRootLogin no"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitRootLogin "
+      line="PermitRootLogin no"
     notify: Reload sshd
+
   - name: 6.2.9 Set SSH PermitEmptyPasswords to No
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitEmptyPasswords " line="PermitEmptyPasswords no"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitEmptyPasswords "
+      line="PermitEmptyPasswords no"
     notify: Reload sshd
+
   - name: 6.2.10 Do Not Allow Users to Set Environment Options
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitUserEnvironment " line="PermitUserEnvironment no"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitUserEnvironment "
+      line="PermitUserEnvironment no"
     notify: Reload sshd
+
   - name: 6.2.11 Use Only Approved Cipher in Counter Mode
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^Ciphers " line="Ciphers aes128-ctr,aes192-ctr,aes256-ctr"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^Ciphers "
+      line="Ciphers aes128-ctr,aes192-ctr,aes256-ctr"
     notify: Reload sshd
+
   - name: 6.2.12 Set Idle Timeout Interval for User Login
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^ClientAliveInterval " line="ClientAliveInterval 300"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^ClientAliveInterval "
+      line="ClientAliveInterval 300"
     notify: Reload sshd
+
   - name: 6.2.12 Set Idle Timeout Interval for User Login
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^ClientAliveCountMax " line="ClientAliveCountMax 0"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^ClientAliveCountMax "
+      line="ClientAliveCountMax 0"
     notify: Reload sshd
+
   - name: 6.2.13 Limit Access via SSH
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^AllowGroups " line="AllowGroups {{ ssh_allow_groups }}"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^AllowGroups "
+      line="AllowGroups {{ ssh_allow_groups }}"
     when: ssh_allow_groups is defined
     notify: Reload sshd
+
   - name: 6.2.13 Limit Access via SSH
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^AllowUsers " line="AllowUsers {{ ssh_allow_users }}"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config 
+      regexp="^AllowUsers "
+      line="AllowUsers {{ ssh_allow_users }}"
     when: ssh_allow_users is defined
     notify: Reload sshd
+
   - name: 6.2.13 Limit Access via SSH
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^DenyGroups " line="DenyGroups {{ ssh_deny_groups }}"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^DenyGroups "
+      line="DenyGroups {{ ssh_deny_groups }}"
     when: ssh_deny_groups is defined
     notify: Reload sshd
+
   - name: 6.2.13 Limit Access via SSH
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^DenyUsers " line="DenyUsers {{ ssh_deny_users }}"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^DenyUsers "
+      line="DenyUsers {{ ssh_deny_users }}"
     when: ssh_deny_users is defined
     notify: Reload sshd
+
   - name: 6.2.14 Set SSH Banner
-    lineinfile: dest=/etc/ssh/sshd_config regexp="^Banner " line="Banner /etc/issue.net"
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^Banner "
+      line="Banner /etc/issue.net"
     notify: Reload sshd
+
   - name: 6.3.1 Upgrade Password Hashing Algorithm to SHA-512
     shell: 'authconfig --test | grep hashing'
     register: password_hash_algorithm
+
   - name: 6.3.1 Upgrade Password Hashing Algorithm to SHA-512
     shell: authconfig --passalgo=sha512 --update
     when: '"sha512" not in password_hash_algorithm.stdout'
+
   - name: 6.3.2 - 6.3.4 Configure PAM
-    copy: src=etc/pam.d/system-auth dest=/etc/pam.d/system-auth
+    copy: >
+      src=etc/pam.d/system-auth
+      dest=/etc/pam.d/system-auth
+
   - name: 6.3.2 - 6.3.4 Configure PAM
-    copy: src=etc/pam.d/password-auth dest=/etc/pam.d/password-auth
+    copy: >
+      src=etc/pam.d/password-auth
+      dest=/etc/pam.d/password-auth
+
   - name: 6.5 Restrict Access to the su Command
-    copy: src=etc/pam.d/su dest=/etc/pam.d/su
+    copy: >
+      src=etc/pam.d/su
+      dest=/etc/pam.d/su
