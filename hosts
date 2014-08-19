@@ -1,4 +1,2 @@
-# This same inventory file is deployed to each "pull"-type node
-
 [targets]
 localhost       ansible_connection=local
