@@ -18,7 +18,13 @@ space_left_action: "email"
 #   no: do not configure rsyslog to receive remote logs from other servers
 rsyslog_host: no
 
-# Services
+# ----------------------------------------------------------------------------
+# WARNING ********************************************************************
+# THIS SECTION IS HAZARDOUS TO PRODUCTION SERVERS. SERIOUSLY.
+# ----------------------------------------------------------------------------
+# Options:
+#   yes: disable/uninstall these services to meet CIS requirements
+#   no: do not alter these services from their current statuc
 dns: no
 dovecot: no
 ftp: no
@@ -30,5 +36,9 @@ samba: no
 snmp: no
 squid: no
 
-# Users
+# CIS 7.5 says that users who are inactive for over 35 days must have their
+# accounts disabled. This could cause issues in some environments.
+# Options:
+#   yes: disable accounts inactive > 35 days per CIS requirements
+#   no: don't adjust inactive account settings
 lock_inactive: no
