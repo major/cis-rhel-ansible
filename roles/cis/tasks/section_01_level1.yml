@@ -25,6 +25,9 @@
     when: item.mount == "/tmp"
     with_items: ansible_mounts
 
+  - name: 1.1.5 Create Separate Partition for /var
+    debug: msg="Manually create Separate Partition for /var."
+
   - name: 1.1.6 Bind Mount the /var/tmp directory to /tmp
     mount: >
       name="/var/tmp"
@@ -35,6 +38,12 @@
     when: item.mount == "/tmp"
     with_items: ansible_mounts
 
+  - name: 1.1.7 Create Separate Partition for /var/log
+    debug: msg="Manually create Separate Partition for /var/log."
+
+  - name: 1.1.8 Create Separate Partition for /var/log/audit 
+    debug: msg="Manually create Separate Partition for /var/log/audit."
+
   - name: 1.1.9 - 1.1.10 Configure /home Partition
     mount: >
       name="/home"
@@ -44,6 +53,15 @@
       opts="nodev"
     when: item.mount == "/home"
     with_items: ansible_mounts
+
+  - name: 1.1.11 Add nodev Option to Removable Media Partitions 
+    debug: msg="Not relevant."
+
+  - name: 1.1.12 Add noexec Option to Removable Media Partitions
+    debug: msg="Not relevant."
+
+  - name: 1.1.13 Add nosuid Option to Removable Media Partitions
+    debug: msg="Not relevant."
 
   - name: 1.1.14 - 1.1.16 Configure /dev/shm Partition
     mount: >
@@ -56,13 +74,56 @@
   - name: 1.1.17 Set sticky bit on all world-writeable directories
     debug: msg="Too destructive -- see notes"
 
+  - name: 1.1.18 Disable Mounting of cramfs Filesystems
+    lineinfile: >
+      state=present 
+      create=yes 
+      dest=/etc/modprobe.d/CIS.conf 
+      line="install cramfs /bin/true"
+  
+  - name: 1.1.19 Disable Mounting of freevxfs Filesystems
+    lineinfile: >
+      state=present 
+      dest=/etc/modprobe.d/CIS.conf 
+      line="install freevxfs /bin/true"
+  
+  - name: 1.1.20 Disable Mounting of jffs2 Filesystems
+    lineinfile: >
+      state=present 
+      dest=/etc/modprobe.d/CIS.conf 
+      line="install jffs2 /bin/true"
+  
+  - name: 1.1.21 Disable Mounting of hfs Filesystems
+    lineinfile: >
+      state=present 
+      dest=/etc/modprobe.d/CIS.conf 
+      line="install hfs /bin/true"
+
+  - name: 1.1.22 Disable Mounting of hfsplus Filesystems
+    lineinfile: >
+      state=present 
+      dest=/etc/modprobe.d/CIS.conf 
+      line="install hfsplus /bin/true"
+
+  - name: 1.1.23 Disable Mounting of squashfs Filesystems
+    lineinfile: >
+      state=present 
+      dest=/etc/modprobe.d/CIS.conf 
+      line="install squashfs /bin/true"
+
+  - name: 1.1.24 Disable Mounting of udf Filesystems
+    lineinfile: >
+      state=present 
+      dest=/etc/modprobe.d/CIS.conf 
+      line="install udf /bin/true"
+
   - name: 1.2.1 Configure connection to the RHN RPM repositories
     command: yum check-update
-    when: ansible_os_family == "RedHat"
+    when: ansible_distribution == "Red Hat Enterprise Linux"
 
   - name: 1.2.2 Verify Red Hat GPG key is installed
     command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-    when: ansible_os_family == "RedHat"
+    when: ansible_distribution == "Red Hat Enterprise Linux"
 
   - name: 1.2.3 Verify that gpgcheck is Globally Activated
     lineinfile: >
