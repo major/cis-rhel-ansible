@@ -50,23 +50,79 @@
       name=talk-server
       state=absent
 
-  - name: 2.1.12 Disable chargen-dgram
-    debug: msg="Not needed. xinetd is already uninstalled."
+  - name: 2.1.12 Disable chargen-dgram (check if exists)
+    stat: path=/etc/xinetd.d/chargen-dgram
+    register: chargen_dgram
 
-  - name: 2.1.13 Disable chargen-stream
-    debug: msg="Not needed. xinetd is already uninstalled."
+  - name: 2.1.12 Disable chargen-dgram (disable xinetd service)
+    service: >
+        name=chargen-dgram
+        state=stopped
+        enabled=no
+    when: chargen_dgram.stat.exists
 
-  - name: 2.1.14 Disable daytime-dgram
-    debug: msg="Not needed. xinetd is already uninstalled."
+  - name: 2.1.13 Disable chargen-stream (check if exists)
+    stat: path=/etc/xinetd.d/chargen-stream
+    register: chargen_stream
 
-  - name: 2.1.15 Disable daytime-stream
-    debug: msg="Not needed. xinetd is already uninstalled."
+  - name: 2.1.13 Disable chargen-stream (disable xinetd service)
+    service: >
+        name=chargen-stream
+        state=stopped
+        enabled=no
+    when: chargen_stream.stat.exists
 
-  - name: 2.1.16 Disable echo-dgram
-    debug: msg="Not needed. xinetd is already uninstalled."
+  - name: 2.1.14 Disable daytime-dgram (check if exists)
+    stat: path=/etc/xinetd.d/daytime-dgram
+    register: daytime_dgram
 
-  - name: 2.1.17 Disable echo-stream
-    debug: msg="Not needed. xinetd is already uninstalled."
+  - name: 2.1.14 Disable daytime-dgram (disable xinetd service)
+    service: >
+        name=daytime-dgram
+        state=stopped
+        enabled=no
+    when: daytime_dgram.stat.exists
 
-  - name: 2.1.18 Disable tcpmux-server
-    debug: msg="Not needed. xinetd is already uninstalled."
+  - name: 2.1.15 Disable daytime-stream (check if exists)
+    stat: path=/etc/xinetd.d/daytime-stream
+    register: daytime_stream
+
+  - name: 2.1.15 Disable daytime-stream (disable xinetd service)
+    service: >
+        name=daytime-stream
+        state=stopped
+        enabled=no
+    when: daytime_stream.stat.exists
+
+  - name: 2.1.16 Disable echo-dgram (check if exists)
+    stat: path=/etc/xinetd.d/echo-dgram
+    register: echo_dgram
+
+  - name: 2.1.16 Disable echo-dgram (disable xinetd service)
+    service: >
+        name=echo-dgram
+        state=stopped
+        enabled=no
+    when: echo_dgram.stat.exists
+
+  - name: 2.1.17 Disable echo-stream (check if exists)
+    stat: path=/etc/xinetd.d/echo-stream
+    register: echo_stream
+
+  - name: 2.1.17 Disable echo-stream (disable xinetd service)
+    service: >
+        name=echo-stream
+        state=stopped
+        enabled=no
+    when: echo_stream.stat.exists
+
+  - name: 2.1.18 Disable tcpmux-server (check if exists)
+    stat: path=/etc/xinetd.d/tcpmux-server
+    register: tcpmux_server
+
+  - name: 2.1.18 Disable tcpmux-server (disable xinetd service)
+    service: >
+        name=tcpmux-server
+        state=stopped
+        enabled=no
+    when: tcpmux_server.stat.exists
