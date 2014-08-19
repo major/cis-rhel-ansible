@@ -1,0 +1,111 @@
+---
+
+  - name: 1.1.1 - 1.1.4 Configure /tmp Partition
+    mount: >
+      name="/tmp"
+      src={{ item.device }}
+      state=mounted
+      fstype={{ item.fstype }}
+      opts="nodev,nosuid,noexec"
+    when: item.mount == "/tmp"
+    with_items: ansible_mounts
+
+  - name: 1.1.6 Bind Mount the /var/tmp directory to /tmp
+    mount: >
+      name="/var/tmp"
+      src="/tmp"
+      state=mounted
+      fstype="none"
+      opts="bind"
+    when: item.mount == "/tmp"
+    with_items: ansible_mounts
+
+  - name: 1.1.9 - 1.1.10 Configure /home Partition
+    mount: >
+      name="/home"
+      src={{ item.device }}
+      state=mounted
+      fstype={{ item.fstype }}
+      opts="nodev"
+    when: item.mount == "/home"
+    with_items: ansible_mounts
+
+  - name: 1.1.14 - 1.1.16 Configure /dev/shm Partition
+    mount: >
+      name="/dev/shm"
+      src="none"
+      state=mounted
+      fstype="tmpfs"
+      opts="nodev,nosuid,noexec"
+
+  - name: 1.1.17 Set sticky bit on all world-writeable directories
+    debug: msg="Too destructive -- see notes"
+
+  - name: 1.2.1 Configure connection to the RHN RPM repositories
+    debug: msg="Check RHN repository setup manually. Doesn't apply to CentOS."
+
+  - name: 1.2.2 Verify Red Hat GPG key is installed
+    debug: msg="Check Red Hat GPG key manually. Doesn't apply to CentOS."
+
+  - name: 1.2.3 Verify that gpgcheck is Globally Activated
+    lineinfile: >
+      state=present
+      dest=/etc/yum.conf
+      regexp=^gpgcheck=
+      line=gpgcheck=1
+
+  - name: 1.2.5 Obtain software package updates with yum
+    debug: msg="Check manually."
+
+  - name: 1.2.6 Verify package integrity using RPM
+    debug: msg="Check via cron/AIDE/manually"
+
+  - name: 1.5.1 Set User/Group Owner on /etc/grub.conf
+    file: >
+      path=/boot/grub/grub.conf
+      owner=root
+      group=root
+
+  - name: 1.5.2 Set Permissions on /etc/grub.conf
+    file: >
+      path=/boot/grub/grub.conf
+      mode=0400
+
+  - name: 1.5.3 Set boot loader password
+    debug: msg="Too destructive for production systems. Evaluate for your environment first."
+
+  - name: 1.5.4 Require authentication for single-user mode
+    debug: msg="Too destructive for production systems. Evaluate for your environment first."
+
+  - name: 1.5.5 Disable Interactive Boot
+    lineinfile: >
+      dest=/etc/sysconfig/init
+      regexp=^PROMPT=
+      line=PROMPT=no
+
+  - name: 1.6.1 Restrict core dumps (via pam)
+    lineinfile: >
+      dest=/etc/security/limits.conf
+      line="* hard core 0"
+      insertafter=EOF
+
+  - name: 1.6.1 Restrict core dumps (via sysctl)
+    sysctl: >
+      name=fs.suid_dumpable
+      value=0
+      state=present
+      ignoreerrors=yes
+
+  - name: 1.6.2 Configure ExecShield 
+    sysctl: >
+      name=kernel.exec-shield
+      value=1
+      state=present
+      ignoreerrors=yes
+
+  - name: 1.6.3 Enable Randomized Virtual Memory Region Placement
+    sysctl: >
+      name=kernel.randomize_va_space
+      value=2
+      state=present
+      ignoreerrors=yes
