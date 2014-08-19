@@ -43,6 +43,16 @@ squid: no
 #   no: don't adjust inactive account settings
 lock_inactive: no
 
+# Enable iptables (CIS 4.7)
+# You should check to see that your current iptables configuration in
+# /etc/sysconfig/iptables is configured properly so that you don't lose access
+# to your server when iptables is enabled.  If you're alreading using iptables,
+# then this setting won't affect you either way.
+# Options:
+#   yes: enable iptables and load the rules from /etc/sysconfig/iptables
+#   no: don't alter iptables whatsoever
+enable_iptables: no
+
 # Disable IPv6 (CIS 4.4.2)
 # It's recommended to configure IPv6 properly instead of disabling it entirely.
 # If your organization really doesn't use IPv6 at all, you could accept the
