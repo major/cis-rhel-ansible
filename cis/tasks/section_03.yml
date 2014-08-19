@@ -23,7 +23,7 @@
   - name: 3.5 Remove DHCP Server
     yum: name=dhcp state=absent
   - name: 3.6 Configure Network Time Protocol (ipv4)
-    yum: pkg=ntp state=present
+    yum: name=ntp state=present
   - name: 3.6 Configure Network Time Protocol (ipv4)
     service: name=ntpd state=started enabled=yes
   - name: 3.6 Configure Network Time Protocol (ipv4)
