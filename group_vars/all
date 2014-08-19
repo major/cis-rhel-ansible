@@ -61,3 +61,11 @@ enable_iptables: no
 #   yes: disable IPv6 per CIS requirements
 #   no: don't alter the IPv6 configuration
 disable_ipv6: no
+
+# SSH configurations (CIS Section 6.2)
+# Uncomment these variables and set them accordingly to have them applied. They
+# are not applied by default.
+#ssh_allow_groups:
+#ssh_allow_users:
+#ssh_deny_groups:
+#ssh_deny_users:
