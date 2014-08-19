@@ -1,5 +1,8 @@
-# AIDE
-aide: yes
+# Should we configure AIDE on the system? (CIS 1.3)
+# Options:
+#   yes: install and configure AIDE
+#   no: do not install or configure AIDE
+configure_aide: yes
 
 # Auditd
 action_mail_acct: "root"
