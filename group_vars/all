@@ -19,7 +19,7 @@ space_left_action: "email"
 rsyslog_host: no
 
 # ----------------------------------------------------------------------------
-# WARNING ********************************************************************
+# WARNING
 # THIS SECTION IS HAZARDOUS TO PRODUCTION SERVERS. SERIOUSLY.
 # ----------------------------------------------------------------------------
 # Options:
@@ -42,3 +42,12 @@ squid: no
 #   yes: disable accounts inactive > 35 days per CIS requirements
 #   no: don't adjust inactive account settings
 lock_inactive: no
+
+# Disable IPv6 (CIS 4.4.2)
+# It's recommended to configure IPv6 properly instead of disabling it entirely.
+# If your organization really doesn't use IPv6 at all, you could accept the
+# CIS requirements and disable IPv6.
+# Options:
+#   yes: disable IPv6 per CIS requirements
+#   no: don't alter the IPv6 configuration
+disable_ipv6: no

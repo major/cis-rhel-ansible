@@ -43,12 +43,16 @@
     sysctl: name=net.ipv6.conf.default.accept_redirects value=0 state=present ignoreerrors=true
   - name: 4.4.2 Disable IPv6
     lineinfile: state=present dest=/etc/sysconfig/network regexp=^NETWORKING_IPV6 line=NETWORKING_IPV6=no
+    when: disable_ipv6
   - name: 4.4.2 Disable IPv6
     lineinfile: state=present dest=/etc/sysconfig/network regexp=^IPV6INIT line=IPV6INIT=no
+    when: disable_ipv6
   - name: 4.4.2 Disable IPv6
     lineinfile: state=present create=yes dest=/etc/modprobe.d/ipv6.conf line="options ipv6 disable=1"
+    when: disable_ipv6
   - name: 4.4.2 Disable IPv6
     service: name=ip6tables enabled=no state=stopped
+    when: disable_ipv6
   - name: 4.5.1 Install TCP Wrappers
     yum: name=tcp_wrappers state=present
   - name: 4.5.2 Create /etc/hosts.allow
