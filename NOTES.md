@@ -31,15 +31,24 @@ Skipped: Restricting root access only to the system console is a bit too restric
 
 ### Section 7
 
-7.1.1 - 7.1.3: Existing user password age is not modified.
+##### 7.1.1 - 7.1.3
+Existing user password age is not modified.
 
 ### Section 8
 
-8.2: Satisfied by 8.1.
-8.3: Not addressing graphical desktop environments.
+##### 8.2
+Satisfied by 8.1.
+
+##### 8.3
+Not addressing graphical desktop environments.
 
 ### Section 9
 
-9.1.1: Not a scorable item and requires human interpretation.  This is best handled by AIDE or other file integrity monitoring systems.
-9.1.10 - 9.1.14: This is best handled by AIDE or other file integrity monitoring systems.
-9.2: These items all require human intervention to resolve.  None of these will be a concern while applying CIS to a vanilla RHEL6 install.
+##### 9.1.1
+Not a scorable item and requires human interpretation.  This is best handled by AIDE or other file integrity monitoring systems.
+
+##### 9.1.10 - 9.1.14
+This is best handled by AIDE or other file integrity monitoring systems.
+
+##### 9.2
+These items all require human intervention to resolve.  None of these will be a concern while applying CIS to a vanilla RHEL6 install.

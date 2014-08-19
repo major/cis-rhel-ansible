@@ -1,0 +1,4 @@
+---
+
+  - name: 9.1.1 Verify system file permissions
+    debug: msg="Check via cron/manually/AIDE."

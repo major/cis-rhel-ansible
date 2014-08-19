@@ -1,0 +1,45 @@
+---
+
+  - name: 9.1.2 Verify Permissions on /etc/passwd
+    file: >
+      path=/etc/passwd
+      mode=0644
+
+  - name: 9.1.3 Verify Permissions on /etc/shadow
+    file: >
+      path=/etc/shadow
+      mode=0000
+
+  - name: 9.1.4 Verify Permissions on /etc/gshadow
+    file: >
+      path=/etc/gshadow
+      mode=0000
+
+  - name: 9.1.5 Verify Permissions on /etc/group
+    file: >
+      path=/etc/group
+      mode=0644
+
+  - name: 9.1.6 Verify User/Group Ownership on /etc/passwd
+    file: >
+      path=/etc/passwd
+      owner=root
+      group=root
+
+  - name: 9.1.7 Verify User/Group Ownership on /etc/shadow
+    file: >
+      path=/etc/shadow
+      owner=root
+      group=root
+
+  - name: 9.1.8 Verify User/Group Ownership on /etc/gshadow
+    file: >
+      path=/etc/gshadow
+      owner=root
+      group=root
+
+  - name: 9.1.9 Verify User/Group Ownership on /etc/group
+    file: >
+      path=/etc/group
+      owner=root
+      group=root
