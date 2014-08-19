@@ -44,10 +44,14 @@
     command: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz' 
         creates=/var/lib/aide/aide.db.gz
     when: configure_aide
+  - name: 1.3.1 Install AIDE (check is prelink installed)
+    stat: path=/usr/sbin/prelink
+    register: prelink_stat
   - name: 1.3.1 Install AIDE (Disable Prelinking)
     lineinfile: state=present dest=/etc/sysconfig/prelink regexp=^PRELINKING= line=PRELINKING=no create=yes
-    notify: Reload prelinking
-    when: configure_aide
+    when:
+      - configure_aide
+      - prelink_stat.stat.exists
   - name: 1.3.2 Implement Periodic Execution of File Integrity
     action: cron name="Run AIDE (CIS 1.3.2)" minute="0" hour="5" job="/usr/sbin/aide --check"
     when: configure_aide
