@@ -1,73 +1,187 @@
 ---
-# CIS Benchmarks Section 1
-  
+
   - name: 1.1.1 - 1.1.4 Configure /tmp Partition
-    mount: name="/tmp" src={{ item.device }} state=mounted fstype={{ item.fstype }} opts="nodev,nosuid,noexec"
+    mount: >
+      name="/tmp"
+      src={{ item.device }}
+      state=mounted
+      fstype={{ item.fstype }}
+      opts="nodev,nosuid,noexec"
     when: item.mount == "/tmp"
     with_items: ansible_mounts
+
   - name: 1.1.6 Bind Mount the /var/tmp directory to /tmp
-    mount: name="/var/tmp" src="/tmp" state=mounted fstype="none" opts="bind"
+    mount: >
+      name="/var/tmp"
+      src="/tmp"
+      state=mounted
+      fstype="none"
+      opts="bind"
     when: item.mount == "/tmp"
     with_items: ansible_mounts
+
   - name: 1.1.9 - 1.1.10 Configure /home Partition
-    mount: name="/home" src={{ item.device }} state=mounted fstype={{ item.fstype }} opts="nodev"
+    mount: >
+      name="/home"
+      src={{ item.device }}
+      state=mounted
+      fstype={{ item.fstype }}
+      opts="nodev"
     when: item.mount == "/home"
     with_items: ansible_mounts
+
   - name: 1.1.14 - 1.1.16 Configure /dev/shm Partition
-    mount: name="/dev/shm" src="none" state=mounted fstype="tmpfs" opts="nodev,nosuid,noexec"
+    mount: >
+      name="/dev/shm"
+      src="none"
+      state=mounted
+      fstype="tmpfs"
+      opts="nodev,nosuid,noexec"
+
   - name: 1.1.18 Disable Mounting of cramfs Filesystems
-    lineinfile: state=present create=yes dest=/etc/modprobe.d/CIS.conf line="install cramfs /bin/true"
+    lineinfile: >
+      state=present
+      create=yes
+      dest=/etc/modprobe.d/CIS.conf
+      line="install cramfs /bin/true"
+
   - name: 1.1.19 Disable Mounting of freevxfs Filesystems
-    lineinfile: state=present create=yes dest=/etc/modprobe.d/CIS.conf line="install freevxfs /bin/true"
+    lineinfile: >
+      state=present
+      create=yes
+      dest=/etc/modprobe.d/CIS.conf
+      line="install freevxfs /bin/true"
+
   - name: 1.1.20 Disable Mounting of jffs2 Filesystems
-    lineinfile: state=present create=yes dest=/etc/modprobe.d/CIS.conf line="install jffs2 /bin/true"
+    lineinfile: >
+      state=present
+      create=yes
+      dest=/etc/modprobe.d/CIS.conf
+      line="install jffs2 /bin/true"
+
   - name: 1.1.21 Disable Mounting of hfs Filesystems
-    lineinfile: state=present create=yes dest=/etc/modprobe.d/CIS.conf line="install hfs /bin/true"
+    lineinfile: >
+      state=present
+      create=yes
+      dest=/etc/modprobe.d/CIS.conf
+      line="install hfs /bin/true"
+
   - name: 1.1.22 Disable Mounting of hfsplus Filesystems
-    lineinfile: state=present create=yes dest=/etc/modprobe.d/CIS.conf line="install hfsplus /bin/true"
+    lineinfile: >
+      state=present
+      create=yes
+      dest=/etc/modprobe.d/CIS.conf
+      line="install hfsplus /bin/true"
+
   - name: 1.1.23 Disable Mounting of squashfs Filesystems
-    lineinfile: state=present create=yes dest=/etc/modprobe.d/CIS.conf line="install squashfs /bin/true"
+    lineinfile: >
+      state=present
+      create=yes
+      dest=/etc/modprobe.d/CIS.conf
+      line="install squashfs /bin/true"
+
   - name: 1.1.24 Disable Mounting of udf Filesystems
-    lineinfile: state=present create=yes dest=/etc/modprobe.d/CIS.conf line="install udf /bin/true"
+    lineinfile: >
+      state=present
+      create=yes
+      dest=/etc/modprobe.d/CIS.conf
+      line="install udf /bin/true"
+
   - name: 1.2.3 Verify that gpgcheck is Globally Activated
-    lineinfile: state=present dest=/etc/yum.conf regexp=^gpgcheck= line=gpgcheck=1
+    lineinfile: >
+      state=present
+      dest=/etc/yum.conf
+      regexp=^gpgcheck=
+      line=gpgcheck=1
+
   - name: 1.2.4 Check to see if rhnsd daemon is installed
     stat: path=/etc/init.d/rhnsd
     register: rhnsd_service
+
   - name: 1.2.4 Disable the rhnsd Daemon
-    service: name=rhnsd enabled=no state=stopped
+    service: >
+      name=rhnsd
+      enabled=no
+      state=stopped
     when: rhnsd_service.stat.exists
+
   - name: 1.3.1 Install AIDE
-    action: yum pkg=aide state=present
+    yum: >
+      name=aide
+      state=present
     when: configure_aide
+
   - name: 1.3.1 Install AIDE (Initialize)
-    command: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz' 
-        creates=/var/lib/aide/aide.db.gz
+    command: >
+      /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz' 
+      creates=/var/lib/aide/aide.db.gz
     when: configure_aide
+
   - name: 1.3.1 Install AIDE (check is prelink installed)
     stat: path=/usr/sbin/prelink
     register: prelink_stat
+
   - name: 1.3.1 Install AIDE (Disable Prelinking)
-    lineinfile: state=present dest=/etc/sysconfig/prelink regexp=^PRELINKING= line=PRELINKING=no create=yes
+    lineinfile: >
+      state=present
+      dest=/etc/sysconfig/prelink
+      regexp=^PRELINKING=
+      line=PRELINKING=no
+      create=yes
     when:
       - configure_aide
       - prelink_stat.stat.exists
+
   - name: 1.3.2 Implement Periodic Execution of File Integrity
-    action: cron name="Run AIDE (CIS 1.3.2)" minute="0" hour="5" job="/usr/sbin/aide --check"
+    cron: >
+      name="Run AIDE (CIS 1.3.2)"
+      minute="0"
+      hour="5"
+      job="/usr/sbin/aide --check"
     when: configure_aide
+
   - name: 1.4.2/1.4.3 Set the SELinux State/Policy (install targeted)
-    yum: name=selinux-policy-targeted state=present
+    yum: >
+      name=selinux-policy-targeted
+      state=present
+
   - name: 1.4.2/1.4.3 Set the SELinux State/Policy
-    selinux: state=enforcing policy=targeted
+    selinux: >
+      state=enforcing
+      policy=targeted
+
   - name: 1.4.5 Remove MCS Translation Service
-    yum: name=mcstrans state=absent
+    yum: >
+      name=mcstrans
+      state=absent
+
   - name: 1.5.1 Set User/Group Owner on /etc/grub.conf
-    file: path=/boot/grub/grub.conf owner=root group=root
+    file: >
+      path=/boot/grub/grub.conf
+      owner=root
+      group=root
+
   - name: 1.5.2 Set Permissions on /etc/grub.conf
-    file: path=/boot/grub/grub.conf mode=0400
+    file: >
+      path=/boot/grub/grub.conf
+      mode=0400
+
   - name: 1.5.5 Disable Interactive Boot
-    lineinfile: dest=/etc/sysconfig/init regexp=^PROMPT= line=PROMPT=no
+    lineinfile: >
+      dest=/etc/sysconfig/init
+      regexp=^PROMPT=
+      line=PROMPT=no
+
   - name: 1.6.2 Configure ExecShield 
-    sysctl: name=kernel.exec-shield value=1 state=present ignoreerrors=yes
+    sysctl: >
+      name=kernel.exec-shield
+      value=1
+      state=present
+      ignoreerrors=yes
+
   - name: 1.6.3 Enable Randomized Virtual Memory Region Placement
-    sysctl: name=kernel.randomize_va_space value=2 state=present ignoreerrors=yes
+    sysctl: >
+      name=kernel.randomize_va_space
+      value=2
+      state=present
+      ignoreerrors=yes
