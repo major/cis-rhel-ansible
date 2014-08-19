@@ -4,14 +4,18 @@
 #   no: do not install or configure AIDE
 configure_aide: yes
 
-# Auditd
+# auditd (CIS 5.2)
+# These are sensible defaults but you may change these to fit your system.
 action_mail_acct: "root"
 admin_space_left_action: "halt"
 max_log_file: 100
 max_log_file_action: "keep_logs"
 space_left_action: "email"
 
-# Rsyslog
+# rsyslog (5.1.6)
+# Options:
+#   yes: configure rsyslog to receive remote logs from other servers
+#   no: do not configure rsyslog to receive remote logs from other servers
 rsyslog_host: no
 
 # Services
