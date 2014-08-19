@@ -1,22 +1,11 @@
 ---
 
-  - name: 8.1 Set Warning Banner for Standard Login Services
-    copy: >
-      src=etc/{{ item }}
-      dest=/etc/{{ item }}
-    with_items:
-      - motd
-      - issue
-      - issue.net
+  - include: section_08_level1.yml
+    tags:
+      - section8
+      - level1
 
-  - name: 8.1 Set Warning Banner for Standard Login Services
-    file: >
-      path=/etc/{{ item }}
-      owner=root
-      group=root
-      mode=0644
-    with_items:
-      - motd
-      - issue
-      - issue.net
-
+  - include: section_08_level2.yml
+    tags:
+      - section8
+      - level2
