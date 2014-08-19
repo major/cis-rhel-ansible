@@ -1,0 +1,6 @@
+---
+
+  - name: 2.1.11 Remove xinetd
+    yum: >
+      name=xinetd
+      state=absent
