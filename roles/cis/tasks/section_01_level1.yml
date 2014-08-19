@@ -57,10 +57,12 @@
     debug: msg="Too destructive -- see notes"
 
   - name: 1.2.1 Configure connection to the RHN RPM repositories
-    debug: msg="Check RHN repository setup manually. Doesn't apply to CentOS."
+    command: yum check-update
+    when: ansible_os_family == "RedHat"
 
   - name: 1.2.2 Verify Red Hat GPG key is installed
-    debug: msg="Check Red Hat GPG key manually. Doesn't apply to CentOS."
+    command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+    when: ansible_os_family == "RedHat"
 
   - name: 1.2.3 Verify that gpgcheck is Globally Activated
     lineinfile: >
