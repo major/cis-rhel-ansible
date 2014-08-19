@@ -11,17 +11,23 @@ Existing mounts will be modified with benchmark options.  Mount points are not c
 Skipped: Adjusting permissions across the filesystem can be destructive.
 
 ##### 1.2.{1,2,5,6}
-Some yum operations are skipped as they apply only to RHEL and not CentOS.
+Skipped: Some yum operations are skipped as they apply only to RHEL and not CentOS.
 
 ##### 1.4.6
-Checking for unconfined daemons should be done via cron jobs or via manual inspection
+Skipped: Checking for unconfined daemons should be done via cron jobs or via manual inspection
 
 ##### 1.5.{3,4}
-Adjusting bootloader configurations at a large scale on production machines could be highly destructive upon reboot.
+Skipped: Adjusting bootloader configurations at a large scale on production machines could be highly destructive upon reboot.
 
 ### Section 4
 
-4.8: IPv6 is disabled so ip6tables is disabled.
+##### 4.8
+IPv6 is disabled so ip6tables is also disabled.
+
+### Section 6
+
+##### 6.4
+Skipped: Restricting root access only to the system console is a bit too restrictive for most environments.
 
 ### Section 7
 
