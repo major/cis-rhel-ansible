@@ -119,11 +119,11 @@
 
   - name: 1.2.1 Configure connection to the RHN RPM repositories
     command: yum check-update
-    when: ansible_distribution == "Red Hat Enterprise Linux"
+    when: ansible_distribution == "RedHat"
 
   - name: 1.2.2 Verify Red Hat GPG key is installed
     command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-    when: ansible_distribution == "Red Hat Enterprise Linux"
+    when: ansible_distribution == "RedHat"
 
   - name: 1.2.3 Verify that gpgcheck is Globally Activated
     lineinfile: >
