@@ -16,6 +16,7 @@
 #
 
 - hosts: all
+  accelerate: true
   user: root
   roles:
     - cis 
