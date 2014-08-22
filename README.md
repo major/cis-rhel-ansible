@@ -23,11 +23,11 @@ For full details and caveats, refer to the [notes](NOTES.md).
 
 Perform a dry run first:
 
-    ansible-playbook -i hosts -C playbook.yaml
+    ansible-playbook -i hosts -C playbook.yml
 
 If you're ***really really*** ready to apply changes, run it in regular mode:
 
-    ansible-playbook -i hosts playbook.yaml
+    ansible-playbook -i hosts playbook.yml
 
 #### Advanced options
 
