@@ -34,7 +34,7 @@
       src={{ item.device }}
       state=mounted
       fstype={{ item.fstype }}
-      opts="nosuid"
+      opts="nodev,nosuid"
     when: item.mount == "/tmp"
     with_items: ansible_mounts
 
@@ -44,14 +44,14 @@
       src={{ item.device }}
       state=mounted
       fstype={{ item.fstype }}
-      opts="noexec"
+      opts="nodev,nosuid,noexec"
     when: item.mount == "/tmp"
     with_items: ansible_mounts
 
   - name: 1.1.5 Create Separate Partition for /var (Scored)
     debug: msg="*** Manually create Separate Partition for /var."
 
-  - name: 1.1.6 Bind Mount the /var/tmp directory to /tmp
+  - name: 1.1.6 Bind Mount the /var/tmp directory to /tmp (Scored)
     mount: >
       name="/var/tmp"
       src="/tmp"
@@ -61,13 +61,16 @@
     when: item.mount == "/tmp"
     with_items: ansible_mounts
 
-  - name: 1.1.7 Create Separate Partition for /var/log
-    debug: msg="Manually create Separate Partition for /var/log."
+  - name: 1.1.7 Create Separate Partition for /var/log (Scored)
+    debug: msg="*** Manually create Separate Partition for /var/log."
 
-  - name: 1.1.8 Create Separate Partition for /var/log/audit 
-    debug: msg="Manually create Separate Partition for /var/log/audit."
+  - name: 1.1.8 Create Separate Partition for /var/log/audit (Scored)
+    debug: msg="*** Manually create Separate Partition for /var/log/audit."
 
-  - name: 1.1.9 - 1.1.10 Configure /home Partition
+  - name: 1.1.9 Create Separate Partition for /home (Scored)
+    debug: msg="*** Manually create Separate Partition for /home."
+
+  - name: 1.1.10 Add nodev Option to /home Partition (Scored)
     mount: >
       name="/home"
       src={{ item.device }}
@@ -77,16 +80,32 @@
     when: item.mount == "/home"
     with_items: ansible_mounts
 
-  - name: 1.1.11 Add nodev Option to Removable Media Partitions 
+  - name: 1.1.11 Add nodev Option to Removable Media Partitions (Not Scored)
+    debug: msg="*** Not relevant."
+
+  - name: 1.1.12 Add noexec Option to Removable Media Partitions (Not Scored)
+    debug: msg="*** Not relevant."
+
+  - name: 1.1.13 Add nosuid Option to Removable Media Partitions (Not Scored)
     debug: msg="Not relevant."
 
-  - name: 1.1.12 Add noexec Option to Removable Media Partitions
-    debug: msg="Not relevant."
+  - name: 1.1.14 Add nodev Option to /dev/shm Partition (Scored)
+    mount: >
+      name="/dev/shm"
+      src="none"
+      state=mounted
+      fstype="tmpfs"
+      opts="nodev"
 
-  - name: 1.1.13 Add nosuid Option to Removable Media Partitions
-    debug: msg="Not relevant."
+  - name: 1.1.15 Add nosuid Option to /dev/shm Partition (Scored)
+    mount: >
+      name="/dev/shm"
+      src="none"
+      state=mounted
+      fstype="tmpfs"
+      opts="nodev,nosuid"
 
-  - name: 1.1.14 - 1.1.16 Configure /dev/shm Partition
+  - name: 1.1.16 Add noexec Option to /dev/shm Partition (Scored)
     mount: >
       name="/dev/shm"
       src="none"
@@ -94,29 +113,29 @@
       fstype="tmpfs"
       opts="nodev,nosuid,noexec"
 
-  - name: 1.1.17 Set sticky bit on all world-writeable directories
-    debug: msg="Too destructive -- see notes"
+  - name: 1.1.17 Set sticky bit on all world-writeable directories (Scored)
+    debug: msg="*** May be too destructive -- see notes"
 
-  - name: 1.2.1 Configure connection to the RHN RPM repositories
+  - name: 1.2.1 Configure Connection to the RHN RPM repositories (Not Scored)
     command: yum check-update
     when: ansible_distribution == "RedHat"
 
   - name: 1.2.2 Verify Red Hat GPG key is installed
-    command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+    command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release (Scored)
     when: ansible_distribution == "RedHat"
 
-  - name: 1.2.3 Verify that gpgcheck is Globally Activated
+  - name: 1.2.3 Verify that gpgcheck is Globally Activated (Scored)
     lineinfile: >
       state=present
       dest=/etc/yum.conf
       regexp=^gpgcheck=
       line=gpgcheck=1
 
-  - name: 1.2.5 Obtain software package updates with yum
-    debug: msg="Check manually."
+  - name: 1.2.5 Obtain software package updates with yum (Not Scored)
+    debug: msg="*** Check manually."
 
-  - name: 1.2.6 Verify package integrity using RPM
-    debug: msg="Check via cron/AIDE/manually"
+  - name: 1.2.6 Verify package integrity using RPM (Note Scored)
+    debug: msg="*** Check via cron/AIDE/manually"
 
   - name: 1.5.1 Set User/Group Owner on /etc/grub.conf
     file: >

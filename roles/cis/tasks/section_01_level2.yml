@@ -15,56 +15,56 @@
 #   limitations under the License.
 #
 
-  - name: 1.1.18 Disable Mounting of cramfs Filesystems
+  - name: 1.1.18 Disable Mounting of cramfs Filesystems (Not Scored)
     lineinfile: >
       state=present
       create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install cramfs /bin/true"
 
-  - name: 1.1.19 Disable Mounting of freevxfs Filesystems
+  - name: 1.1.19 Disable Mounting of freevxfs Filesystems (Not Scored)
     lineinfile: >
       state=present
       create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install freevxfs /bin/true"
 
-  - name: 1.1.20 Disable Mounting of jffs2 Filesystems
+  - name: 1.1.20 Disable Mounting of jffs2 Filesystems (Not Scored)
     lineinfile: >
       state=present
       create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install jffs2 /bin/true"
 
-  - name: 1.1.21 Disable Mounting of hfs Filesystems
+  - name: 1.1.21 Disable Mounting of hfs Filesystems (Not Scored)
     lineinfile: >
       state=present
       create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install hfs /bin/true"
 
-  - name: 1.1.22 Disable Mounting of hfsplus Filesystems
+  - name: 1.1.22 Disable Mounting of hfsplus Filesystems (Not Scored)
     lineinfile: >
       state=present
       create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install hfsplus /bin/true"
 
-  - name: 1.1.23 Disable Mounting of squashfs Filesystems
+  - name: 1.1.23 Disable Mounting of squashfs Filesystems (Not Scored)
     lineinfile: >
       state=present
       create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install squashfs /bin/true"
 
-  - name: 1.1.24 Disable Mounting of udf Filesystems
+  - name: 1.1.24 Disable Mounting of udf Filesystems (Not Scored)
     lineinfile: >
       state=present
       create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install udf /bin/true"
 
-  - name: 1.2.4 Check to see if rhnsd daemon is installed
+  - name: 1.2.4 Check to see if rhnsd daemon is installed (Not Scored)
     stat: path=/etc/init.d/rhnsd
     register: rhnsd_service
     when: ansible_distribution == "RedHat"
