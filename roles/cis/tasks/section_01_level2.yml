@@ -73,23 +73,23 @@
     action: command /sbin/chkconfig rhnsd off
     when: ansible_distribution == "RedHat"
 
-  - name: 1.3.1 Install AIDE
+  - name: 1.3.1 Install AIDE (Scored)
     yum: >
       name=aide
       state=present
     when: configure_aide
 
-  - name: 1.3.1 Install AIDE (Initialize)
+  - name: 1.3.1 Install AIDE (Initialize AIDE) (Scored)
     command: >
       /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz' 
       creates=/var/lib/aide/aide.db.gz
     when: configure_aide
 
-  - name: 1.3.1 Install AIDE (check is prelink installed)
+  - name: 1.3.1 Install AIDE (check is prelink installed) (Scored)
     stat: path=/usr/sbin/prelink
     register: prelink_stat
 
-  - name: 1.3.1 Install AIDE (Disable Prelinking)
+  - name: 1.3.1 Install AIDE (Disable Prelinking) (Scored)
     lineinfile: >
       state=present
       dest=/etc/sysconfig/prelink
@@ -100,7 +100,7 @@
       - configure_aide
       - prelink_stat.stat.exists
 
-  - name: 1.3.2 Implement Periodic Execution of File Integrity
+  - name: 1.3.2 Implement Periodic Execution of File Integrity (Scored)
     cron: >
       name="Run AIDE (CIS 1.3.2)"
       minute="0"
@@ -108,20 +108,26 @@
       job="/usr/sbin/aide --check"
     when: configure_aide
 
-  - name: 1.4.2/1.4.3 Set the SELinux State/Policy (install targeted)
+  - name: 1.4.2/1.4.3 Set the SELinux State/Policy (Scored) (install targeted)
     yum: >
       name=selinux-policy-targeted
       state=present
 
-  - name: 1.4.2/1.4.3 Set the SELinux State/Policy
+  - name: 1.4.2/1.4.3 Set the SELinux State/Policy (Scored)
     selinux: >
       state=enforcing
       policy=targeted
 
-  - name: 1.4.5 Remove MCS Translation Service
+  - name: 1.4.4 Remove SETroubleshoot (Scored)
+    yum: >
+      name=setroubleshoot
+      state=absent
+
+  - name: 1.4.5 Remove MCS Translation Service (mcstrans) (Scored)
     yum: >
       name=mcstrans
       state=absent
 
-  - name: 1.4.6 Check for unconfined daemons
-    debug: msg="Check via cron jobs or manually."
+  - name: 1.4.6 Check for unconfined daemons (Scored)
+    debug: msg="*** Check via cron jobs or manually."
+

@@ -58,3 +58,6 @@
       path=/etc/group
       owner=root
       group=root
+
+  - name: 9.1.10 Find World Writable Files 
+    debug: msg="df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002"
