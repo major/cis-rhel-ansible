@@ -98,6 +98,7 @@
 
   - name: 1.2.1 Configure Connection to the RHN RPM repositories (Not Scored)
     command: yum check-update
+    failed_when: "result.rc == 1"
     when: ansible_distribution == "RedHat"
 
   - name: 1.2.2 Verify Red Hat GPG key is installed (Scored)
