@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 
-  - name: 2.1.11 Remove xinetd
+  - name: 2.1.11 Remove xinetd (Scored)
     yum: >
       name=xinetd
       state=absent
