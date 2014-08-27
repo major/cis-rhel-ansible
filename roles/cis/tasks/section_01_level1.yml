@@ -98,6 +98,7 @@
 
   - name: 1.2.1 Configure Connection to the RHN RPM repositories (Not Scored)
     command: yum check-update
+    register: result
     failed_when: "result.rc == 1"
     when: ansible_distribution == "RedHat"
 
