@@ -19,6 +19,25 @@ For full details and caveats, refer to the [notes](NOTES.md).
 
 **Don't run this blindly on an actively running system.**  The playbook will make ***serious*** modifications to your system that could affect its availability.
 
+#### Getting the playbook and CIS role
+The repository contains the scaffold to use the CIS ansible role.  The role itself exists in the [ansible-role-cis repository](https://github.com/major/ansible-role-cis) but we can bring it in easily with `git submodule`:
+
+    git clone https://github.com/major/cis-rhel-ansible.git
+    git submodule update --init
+
+If you're not familiar with [submodules](http://git-scm.com/book/en/Git-Tools-Submodules) (they can be a bit weird), here's how you pull the latest commits from this repository as well as the submodule:
+
+    git pull origin/master
+    git submodule update
+
+Fans of [Ansible Galaxy](https://galaxy.ansible.com) can install the role through the `ansible-galaxy` command:
+
+    # Install to /etc/ansible/roles/ (requires root privileges on most systems)
+    ansible-galaxy install -p . major.cis
+
+    # Install to 'roles' in your current directory
+    ansible-galaxy install -p roles/ major.cis
+
 #### Basic operation
 
 Perform a dry run first:
