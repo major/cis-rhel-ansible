@@ -122,6 +122,7 @@
   - name: Get Absolute Path to grub.conf
     command: readlink -f /etc/grub.conf
     register: readlink
+    always_run: yes
 
   - name: 1.5.1 Set User/Group Owner on /etc/grub.conf (Scored)
     file: >
