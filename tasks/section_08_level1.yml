@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 
-  - name: 8.1 Set Warning Banner for Standard Login Services
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     copy: >
       src=etc/{{ item }}
       dest=/etc/{{ item }}
@@ -23,8 +23,11 @@
       - motd
       - issue
       - issue.net
+    tags:
+      - scored
+      - section8.1
 
-  - name: 8.1 Set Warning Banner for Standard Login Services
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     file: >
       path=/etc/{{ item }}
       owner=root
@@ -34,3 +37,6 @@
       - motd
       - issue
       - issue.net
+    tags:
+      - scored
+      - section8.1
