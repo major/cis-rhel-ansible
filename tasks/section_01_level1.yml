@@ -18,10 +18,8 @@
   - name: 1.1.1 Create Separate Partition for /tmp (Scored)
     debug: msg="*** Manually create Separate Partition for /tmp."
     tags:
-      - section1
       - section1.1
       - section1.1.1
-      - level1
       - scored
 
   - name: 1.1.2 - 1.1.4 Set nodev,nosuid,noexec option for /tmp Partition (Scored)
@@ -34,19 +32,15 @@
     when: item.mount == "/tmp"
     with_items: ansible_mounts
     tags:
-      - section1
       - section1.1
       - section1.1.2
-      - level1
       - scored
 
   - name: 1.1.5 Create Separate Partition for /var (Scored)
     debug: msg="*** Manually create Separate Partition for /var."
     tags:
-      - section1
       - section1.1
       - section1.1.5
-      - level1
       - scored
 
   - name: 1.1.6 Bind Mount the /var/tmp directory to /tmp (Scored)
@@ -59,38 +53,30 @@
     when: item.mount == "/tmp"
     with_items: ansible_mounts
     tags:
-      - section1
       - section1.1
       - section1.1.6
-      - level1
       - scored
       
 
   - name: 1.1.7 Create Separate Partition for /var/log (Scored)
     debug: msg="*** Manually create Separate Partition for /var/log."
     tags:
-      - section1
       - section1.1
       - section1.1.7
-      - level1
       - scored
       
   - name: 1.1.8 Create Separate Partition for /var/log/audit (Scored)
     debug: msg="*** Manually create Separate Partition for /var/log/audit."
     tags:
-      - section1
       - section1.1
       - section1.1.8
-      - level1
       - scored
       
   - name: 1.1.9 Create Separate Partition for /home (Scored)
     debug: msg="*** Manually create Separate Partition for /home."
     tags:
-      - section1
       - section1.1
       - section1.1.9
-      - level1
       - scored
       
   - name: 1.1.10 Add nodev Option to /home Partition (Scored)
@@ -103,37 +89,29 @@
     when: item.mount == "/home"
     with_items: ansible_mounts
     tags:
-      - section1
       - section1.1
       - section1.1.10
-      - level1
       - scored
       
   - name: 1.1.11 Add nodev Option to Removable Media Partitions (Not Scored)
     debug: msg="*** Not relevant."
     tags:
-      - section1
       - section1.1
       - section1.1.11
-      - level1
       - scored
       
   - name: 1.1.12 Add noexec Option to Removable Media Partitions (Not Scored)
     debug: msg="*** Not relevant."
     tags:
-      - section1
       - section1.1
       - section1.1.12
-      - level1
       - notscored
       
   - name: 1.1.13 Add nosuid Option to Removable Media Partitions (Not Scored)
     debug: msg="*** Not relevant."
     tags:
-      - section1
       - section1.1
       - section1.1.13
-      - level1
       - notscored
       
   - name: 1.1.14 Add nodev Option to /dev/shm Partition (Scored)
@@ -144,10 +122,8 @@
       fstype="tmpfs"
       opts="nodev"
     tags:
-      - section1
       - section1.1
       - section1.1.14
-      - level1
       - scored
       
   - name: 1.1.15 Add nosuid Option to /dev/shm Partition (Scored)
@@ -158,10 +134,8 @@
       fstype="tmpfs"
       opts="nodev,nosuid"
     tags:
-      - section1
       - section1.1
       - section1.1.15
-      - level1
       - scored
       
   - name: 1.1.16 Add noexec Option to /dev/shm Partition (Scored)
@@ -172,19 +146,15 @@
       fstype="tmpfs"
       opts="nodev,nosuid,noexec"
     tags:
-      - section1
       - section1.1
       - section1.1.16
-      - level1
       - scored
       
   - name: 1.1.17 Set sticky bit on all world-writeable directories (Scored)
     debug: msg="*** May be too destructive -- see notes"
     tags:
-      - section1
       - section1.1
       - section1.1.17
-      - level1
       - scored
       
   - name: 1.2.1 Configure Connection to the RHN RPM repositories (Not Scored)
@@ -193,20 +163,16 @@
     failed_when: "result.rc == 1"
     when: ansible_distribution == "RedHat"
     tags:
-      - section1
       - section1.2
       - section1.2.1
-      - level1
       - notscored
       
   - name: 1.2.2 Verify Red Hat GPG key is installed (Scored)
     command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release 
     when: ansible_distribution == "RedHat"
     tags:
-      - section1
       - section1.2
       - section1.2.2
-      - level1
       - scored
       
   - name: 1.2.3 Verify that gpgcheck is Globally Activated (Scored)
@@ -216,28 +182,22 @@
       regexp=^gpgcheck=
       line=gpgcheck=1
     tags:
-      - section1
       - section1.2
       - section1.2.3
-      - level1
       - scored
       
   - name: 1.2.5 Obtain software package updates with yum (Not Scored)
     debug: msg="*** Check manually."
     tags:
-      - section1
       - section1.2
       - section1.2.5
-      - level1
       - notscored
       
   - name: 1.2.6 Verify package integrity using RPM (Not Scored)
     debug: msg="*** Check via cron/AIDE/manually"
     tags:
-      - section1
       - section1.2
       - section1.2.6
-      - level1
       - notscored
       
   - name: 1.5.1 Get Absolute Path to grub.conf
@@ -245,10 +205,8 @@
     register: readlink
     always_run: yes
     tags:
-      - section1
       - section1.5
       - section1.5.1
-      - level1
       - scored
       
   - name: 1.5.1 Set User/Group Owner on /etc/grub.conf (Scored)
@@ -257,10 +215,8 @@
       owner=root
       group=root
     tags:
-      - section1
       - section1.5
       - section1.5.1
-      - level1
       - scored
       
   - name: 1.5.2 Set Permissions on /etc/grub.conf (Scored)
@@ -268,28 +224,22 @@
       path={{ readlink.stdout }}
       mode=0400
     tags:
-      - section1
       - section1.5
       - section1.5.2
-      - level1
       - scored
       
   - name: 1.5.3 Set boot loader password (Scored)
     debug: msg="*** Too destructive for production systems. Evaluate for your environment first."
     tags:
-      - section1
       - section1.5
       - section1.5.3
-      - level1
       - scored
       
   - name: 1.5.4 Require authentication for single-user mode (Scored)
     debug: msg="*** Too destructive for production systems. Evaluate for your environment first."
     tags:
-      - section1
       - section1.5
       - section1.5.4
-      - level1
       - scored
       
   - name: 1.5.5 Disable Interactive Boot (Scored)
@@ -298,10 +248,8 @@
       regexp=^PROMPT=
       line=PROMPT=no
     tags:
-      - section1
       - section1.5
       - section1.5.5
-      - level1
       - scored
       
   - name: 1.6.1 Restrict core dumps (Scored) - via pam
@@ -310,10 +258,8 @@
       line="* hard core 0"
       insertafter=EOF
     tags:
-      - section1
       - section1.6
       - section1.6.1
-      - level1
       - scored
       
   - name: 1.6.1 Restrict core dumps (Scored) - via sysctl
@@ -324,10 +270,8 @@
       ignoreerrors=yes
       insertafter=EOF
     tags:
-      - section1
       - section1.6
       - section1.6.1
-      - level1
       - scored
 
   - name: 1.6.2 Configure ExecShield (Scored)
@@ -337,10 +281,8 @@
       state=present
       ignoreerrors=yes
     tags:
-      - section1
       - section1.6
       - section1.6.2
-      - level1
       - scored
 
   - name: 1.6.3 Enable Randomized Virtual Memory Region Placement (Scored)
@@ -350,10 +292,8 @@
       state=present
       ignoreerrors=yes
     tags:
-      - section1
       - section1.6
       - section1.6.3
-      - level1
       - scored
 
   - name: 1.7 Use the Latest OS Release (Not Scored)
@@ -361,7 +301,5 @@
       cat /etc/redhat-release
     when: ansible_distribution == "RedHat"
     tags:
-      - section1
       - section1.7
-      - level1
       - notscored
