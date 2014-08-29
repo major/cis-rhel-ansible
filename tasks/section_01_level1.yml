@@ -119,15 +119,20 @@
   - name: 1.2.6 Verify package integrity using RPM (Not Scored)
     debug: msg="*** Check via cron/AIDE/manually"
 
+  - name: Get Absolute Path to grub.conf
+    command: readlink -f /etc/grub.conf
+    register: readlink
+    always_run: yes
+
   - name: 1.5.1 Set User/Group Owner on /etc/grub.conf (Scored)
     file: >
-      path=/etc/grub.conf
+      path={{ readlink.stdout }}
       owner=root
       group=root
 
   - name: 1.5.2 Set Permissions on /etc/grub.conf (Scored)
     file: >
-      path=/etc/grub.conf
+      path={{ readlink.stdout }}
       mode=0400
 
   - name: 1.5.3 Set boot loader password (Scored)
