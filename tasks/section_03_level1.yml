@@ -15,41 +15,41 @@
 #   limitations under the License.
 #
 
-  - name: 3.1 Set Daemon umask
+  - name: 3.1 Set Daemon umask (Scored)
     lineinfile: >
       dest=/etc/sysconfig/init
       state=present
       regexp=^umask
       line="umask 027"
 
-  - name: 3.2 Remove X Windows (runlevel 3)
+  - name: 3.2 Remove X Windows (runlevel 3) (Scored)
     lineinfile: >
       dest=/etc/inittab
       state=present
       regexp="^id:"
       line="id:3:initdefault:"
 
-  - name: 3.2 Remove X Windows (remove package group)
+  - name: 3.2 Remove X Windows (remove package group) (Scored)
     yum: >
       name=xorg-x11-server-common
       state=absent
 
-  - name: 3.3 Disable Avahi Server (check if installed)
+  - name: 3.3 Disable Avahi Server (check if installed) (Scored)
     stat: path=/etc/init.d/avahi-daemon
     register: avahi_service
 
-  - name: 3.3 Disable Avahi Server (disable service)
+  - name: 3.3 Disable Avahi Server (disable service) (Scored)
     service: >
       name=avahi-daemon
       state=stopped
       enabled=no
     when: avahi_service.stat.exists
 
-  - name: 3.4 Check to see if cups daemon is installed
+  - name: 3.4 Check to see if cups daemon is installed (Not Scored)
     stat: path=/etc/init.d/cups
     register: cups_service
 
-  - name: 3.4 Disable Print Server - CUPS
+  - name: 3.4 Disable Print Server - CUPS (Not Scored)
     service: >
       name=cups
       state=stopped
@@ -57,23 +57,23 @@
     ignore_errors: yes
     when: cups_service.stat.exists
 
-  - name: 3.5 Remove DHCP Server
+  - name: 3.5 Remove DHCP Server (Score)
     yum: >
       name=dhcp
       state=absent
 
-  - name: 3.6 Configure Network Time Protocol (ipv4)
+  - name: 3.6 Configure Network Time Protocol (ipv4) (Scored)
     yum: >
       name=ntp
       state=present
 
-  - name: 3.6 Configure Network Time Protocol (ipv4)
+  - name: 3.6 Configure Network Time Protocol (ipv4) (Scored)
     service: >
       name=ntpd
       state=started
       enabled=yes
 
-  - name: 3.6 Configure Network Time Protocol (ipv4)
+  - name: 3.6 Configure Network Time Protocol (ipv4) (Scored)
     lineinfile: >
       dest=/etc/ntp.conf
       state=present
@@ -81,7 +81,7 @@
       line="restrict default kod nomodify notrap nopeer noquery"
       insertafter=EOF
 
-  - name: 3.6 Configure Network Time Protocol (ipv6)
+  - name: 3.6 Configure Network Time Protocol (ipv6) (Scored)
     lineinfile: >
       dest=/etc/ntp.conf
       state=present
@@ -89,27 +89,27 @@
       line="restrict -6 default kod nomodify notrap nopeer noquery"
       insertafter=EOF
 
-  - name: 3.7 Remove LDAP
+  - name: 3.7 Remove LDAP (Not Scored)
     yum: >
       name=openldap-clients
       state=absent
     when: not ldap_client
 
-  - name: 3.7 Remove LDAP
+  - name: 3.7 Remove LDAP (Not Scored)
     yum: >
       name=openldap-servers
       state=absent
     when: not ldap_server
 
-  - name: 3.8 Disable NFS and RPC (check for nfs-utils)
+  - name: 3.8 Disable NFS and RPC (check for nfs-utils) (Not Scored)
     stat: path=/etc/init.d/nfslock
     register: nfs_utils
 
-  - name: 3.8 Disable NFS and RPC (check for rpcbind)
+  - name: 3.8 Disable NFS and RPC (check for rpcbind) (Not Scored)
     stat: path=/etc/init.d/rpcbind
     register: rpcbind
 
-  - name: 3.8 Disable NFS and RPC (nfs-utils services)
+  - name: 3.8 Disable NFS and RPC (nfs-utils services) (Not Scored)
     service: >
       name={{ item }}
       state=stopped
