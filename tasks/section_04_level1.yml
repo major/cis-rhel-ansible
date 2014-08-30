@@ -153,6 +153,7 @@
       state=present
       ignoreerrors=true
     tags:
+      - notscored
       - section4.4
       - section4.4.1
       - section4.4.1.1
@@ -164,6 +165,7 @@
       state=present
       ignoreerrors=true
     tags:
+      - notscored
       - section4.4
       - section4.4.1
       - section4.4.1.1
@@ -175,6 +177,7 @@
       state=present
       ignoreerrors=true
     tags:
+      - notscored
       - section4.4
       - section4.4.1
       - section4.4.1.2
@@ -186,6 +189,7 @@
       state=present
       ignoreerrors=true
     tags:
+      - notscored
       - section4.4
       - section4.4.1
       - section4.4.1.2
@@ -198,6 +202,7 @@
       line=NETWORKING_IPV6=no
     when: disable_ipv6
     tags:
+      - notscored
       - section4.4
       - section4.4.2
 
@@ -209,6 +214,7 @@
       line=IPV6INIT=no
     when: disable_ipv6
     tags:
+      - notscored
       - section4.4
       - section4.4.2
 
@@ -220,6 +226,7 @@
       line="options ipv6 disable=1"
     when: disable_ipv6
     tags:
+      - notscored
       - section4.4
       - section4.4.2
 
@@ -230,6 +237,7 @@
       state=stopped
     when: disable_ipv6
     tags:
+      - notscored
       - section4.4
       - section4.4.2
 
@@ -238,6 +246,7 @@
     ignore_errors: yes
     when: disable_ipv6
     tags:
+      - notscored
       - section4.4
       - section4.4.2
 
@@ -246,6 +255,7 @@
       name=tcp_wrappers
       state=present
     tags:
+      - notscored
       - section4.5
       - section4.5.1
 
@@ -257,6 +267,7 @@
       regexp=^ALL
       line=ALL:{{ tcp_allow | default("ALL") }}
     tags:
+      - notscored
       - section4.5
       - section4.5.2
 
@@ -276,6 +287,7 @@
       dest=/etc/hosts.deny
       line=ALL:ALL
     tags:
+      - notscored
       - section4.5
       - section4.5.4
 
@@ -295,6 +307,7 @@
       dest=/etc/modprobe.d/CIS.conf
       line="install dccp /bin/true"
     tags:
+      - notscored
       - section4.6
       - section4.6.1
 
@@ -304,6 +317,7 @@
       dest=/etc/modprobe.d/CIS.conf
       line="install sctp /bin/true"
     tags:
+      - notscored
       - section4.6
       - section4.6.2
 
@@ -313,6 +327,7 @@
       dest=/etc/modprobe.d/CIS.conf
       line="install rds /bin/true"
     tags:
+      - notscored
       - section4.6
       - section4.6.3
 
@@ -322,6 +337,7 @@
       dest=/etc/modprobe.d/CIS.conf
       line="install tipc /bin/true"
     tags:
+      - notscored
       - section4.6
       - section4.6.4
 
@@ -334,3 +350,14 @@
     tags:
       - scored
       - section4.7
+
+  - name: 4.8 Enable IP6tables (Not Scored)
+    service: >
+      name=ip6tables
+      enabled=yes
+      state=started
+    when: enable_ip6tables
+    tags:
+      - notscored
+      - section4.8
+      

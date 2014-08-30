@@ -397,6 +397,7 @@
   - name: 6.4 Restrict root login to system console (Not Scored)
     debug: msg="Too restrictive for most environments."
     tags:
+      - notscored
       - section6.4
 
   - name: 6.5 Restrict Access to the su Command (Scored)

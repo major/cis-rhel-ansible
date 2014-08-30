@@ -23,6 +23,7 @@
       line="max_log_file = {{ max_log_file }}"
     notify: Reload auditd Rules
     tags:
+      - notscored
       - section5.2
       - section5.2.1
       - section5.2.1.1
@@ -35,6 +36,7 @@
       line="space_left_action = {{ space_left_action }}"
     notify: Reload auditd Rules
     tags:
+      - notscored
       - section5.2
       - section5.2.1
       - section5.2.1.2
@@ -47,6 +49,7 @@
       line="action_mail_acct = {{ action_mail_acct }}"
     notify: Reload auditd Rules
     tags:
+      - notscored
       - section5.2
       - section5.2.1
       - section5.2.1.2
@@ -59,6 +62,7 @@
       line="admin_space_left_action = {{ admin_space_left_action }}"
     notify: Reload auditd Rules
     tags:
+      - notscored
       - section5.2
       - section5.2.1
       - section5.2.1.2

@@ -94,5 +94,6 @@
   - name: 9.1.10 Find World Writable Files (Not Scored)
     debug: msg="df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002"
     tags:
+      - notscored
       - section9.1
       - section9.1.10

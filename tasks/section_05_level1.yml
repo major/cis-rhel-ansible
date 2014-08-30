@@ -42,6 +42,7 @@
       group=root
       mode=0644
     tags:
+      - notscored
       - section5.1
       - section5.1.3
 
@@ -81,6 +82,7 @@
       line="$ModLoad imtcp.so"
     when: rsyslog_host
     tags:
+      - notscored
       - section5.1
       - section5.1.6
 
@@ -90,6 +92,7 @@
       line="$InputTCPServerRun 514"
     when: rsyslog_host
     tags:
+      - notscored
       - section5.1
       - section5.1.6
 
@@ -98,4 +101,5 @@
       src=etc/logrotate.d/syslog
       dest=/etc/logrotate.d/syslog
     tags:
+      - notscored
       - section5.3
