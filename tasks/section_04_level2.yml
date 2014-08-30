@@ -15,30 +15,46 @@
 #   limitations under the License.
 #
 
-  - name: 4.2.3 Disable Secure ICMP Redirect Acceptance
+  - name: 4.2.3 Disable Secure ICMP Redirect Acceptance (Scored)
     sysctl: >
       name=net.ipv4.conf.all.secure_redirects
       value=0
       state=present
       ignoreerrors=true
+    tags:
+      - scored
+      - section4.2
+      - section4.2.3
 
-  - name: 4.2.3 Disable Secure ICMP Redirect Acceptance
+  - name: 4.2.3 Disable Secure ICMP Redirect Acceptance (Scored)
     sysctl: >
       name=net.ipv4.conf.default.secure_redirects
       value=0
       state=present
       ignoreerrors=true
+    tags:
+      - scored
+      - section4.2
+      - section4.2.3
 
-  - name: 4.2.7 Enable RFC-recommended Source Route Validation
+  - name: 4.2.7 Enable RFC-recommended Source Route Validation (Scored)
     sysctl: >
       name=net.ipv4.conf.all.rp_filter
       value=1
       state=present
       ignoreerrors=true
+    tags:
+      - scored
+      - section4.2
+      - section4.2.7
 
-  - name: 4.2.7 Enable RFC-recommended Source Route Validation
+  - name: 4.2.7 Enable RFC-recommended Source Route Validation (Scored)
     sysctl: >
       name=net.ipv4.conf.default.rp_filter
       value=1
       state=present
       ignoreerrors=true
+    tags:
+      - scored
+      - section4.2
+      - section4.2.7
