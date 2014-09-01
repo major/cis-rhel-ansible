@@ -89,7 +89,8 @@
   - name: 3.6 Configure Network Time Protocol (ipv4) (Scored)
     yum: >
       pkg=ntp
-      state=installed
+      state=installed    
+    always_run: yes
     tags:
       - scored
       - section3.6
