@@ -356,6 +356,7 @@
       name=ip6tables
       enabled=yes
       state=started
+    ignore_errors: yes
     when: enable_ip6tables
     tags:
       - notscored
