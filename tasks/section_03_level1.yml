@@ -83,7 +83,7 @@
       name=dhcp
       state=absent
     tags:
-      - notscored
+      - scored
       - section3.5
 
   - name: 3.6 Configure Network Time Protocol (ipv4) (Scored)
