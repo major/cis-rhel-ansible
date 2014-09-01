@@ -87,6 +87,14 @@
       - section3.5
 
   - name: 3.6 Configure Network Time Protocol (ipv4) (Scored)
+    yum: >
+      name=ntp
+      state=present
+    tags:
+      - scored
+      - section3.6
+
+  - name: 3.6 Configure Network Time Protocol (ipv4) (Scored)
     service: >
       name=ntpd
       state=started
