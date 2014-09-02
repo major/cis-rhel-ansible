@@ -92,35 +92,35 @@
       - section9.1.9
 
   - name: 9.1.10 Find World Writable Files (Not Scored)
-    command: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002"
+    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
     tags:
       - notscored
       - section9.1
       - section9.1.10
 
   - name: 9.1.11 Find Un-owned Files and Directories (Scored)
-    command: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls"
-    tags:
+    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
+        tags:
       - scored
       - section9.1
       - section9.1.11
 
   - name: 9.1.12 Find Un-grouped Files and Directories (Scored)
-    command: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls"
+    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
     tags:
       - scored
       - section9.1
       - section9.1.12
 
   - name: 9.1.13 Find SUID System Executables (Not Scored)
-    command: '/bin/rpm -V `/bin/rpm -qf /usr/bin/sudo`'
+    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
     tags:
       - notscored
       - section9.1
       - section9.1.13
 
   - name: 9.1.14 Find SGID System Executables (Not Scored)
-    command: '/bin/rpm -V `/bin/rpm -qf /usr/bin/sudo`'
+    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
     tags:
       - notscored
       - section9.1
