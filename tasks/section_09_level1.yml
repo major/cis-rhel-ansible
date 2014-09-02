@@ -97,3 +97,136 @@
       - notscored
       - section9.1
       - section9.1.10
+
+  - name: 9.2.1 Ensure Password Fields are Not Empty (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.1
+
+  - name: 9.2.2 Verify No Legacy "+" Entries Exist in /etc/passwd File (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.2
+
+  - name: 9.2.3 Verify No Legacy "+" Entries Exist in /etc/shadow File (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.3
+
+  - name: 9.2.4 Verify No Legacy "+" Entries Exist in /etc/group File (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.4
+
+  - name: 9.2.5 Verify No UID 0 Accounts Exist Other Than root (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.5
+
+  - name: 9.2.6 Ensure root PATH Integrity (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.6
+
+  - name: 9.2.7 Check Permissions on User Home Directories (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.7
+
+  - name: 9.2.8 Check User Dot File Permissions (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.8
+
+  - name: 9.2.9 Check Permissions on User .netrc Files (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.9
+
+  - name: 9.2.10 Check for Presence of User .rhosts Files (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.10
+
+  - name: 9.2.11 Check Groups in /etc/passwd (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.11
+
+  - name: 9.2.12 Check That Users Are Assigned Valid Home Directories (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.12
+
+  - name: 9.2.13 Check User Home Directory Ownership (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.13
+
+  - name: 9.2.14 Check for Duplicate UIDs (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.14
+
+  - name: 9.2.15 Check for Duplicate GIDs (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.15
+
+  - name: 9.2.16 Check for Duplicate User Names (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.16
+
+  - name: 9.2.17 Check for Duplicate Group Names (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.17
+
+  - name: 9.2.18 Check for Presence of User .netrc Files (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.18
+
+  - name: 9.2.19 Check for Presence of User .forward Files (Scored)
+    debug: msg="*** To do later"
+    tags:
+      - scored
+      - section9.2
+      - section9.2.19
