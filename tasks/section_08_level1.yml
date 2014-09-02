@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 
-  - name: 8.1 Set Warning Banner for Standard Login Services
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     copy: >
       src=etc/{{ item }}
       dest=/etc/{{ item }}
@@ -23,8 +23,11 @@
       - motd
       - issue
       - issue.net
+    tags:
+      - scored
+      - section8.1
 
-  - name: 8.1 Set Warning Banner for Standard Login Services
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     file: >
       path=/etc/{{ item }}
       owner=root
@@ -34,3 +37,25 @@
       - motd
       - issue
       - issue.net
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.2 Remove OS Information from Login Warning Banners (Scored)
+    replace: >
+      dest=/etc/{{ item }}
+      regexp='\\r|\\v|\\s' 
+      replace='[CIS replaced]'
+    with_items:
+      - motd
+      - issue
+      - issue.net 
+    tags:
+      - scored
+      - section8.2
+
+  - name: 8.3 Set GNOME Warning Banner (Not Scored)
+    debug: msg="*** Will do later"
+    tags:
+      - scored
+      - section8.3

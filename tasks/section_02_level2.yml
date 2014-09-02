@@ -19,3 +19,8 @@
     yum: >
       name=xinetd
       state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.11
+      

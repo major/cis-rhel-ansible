@@ -15,63 +15,113 @@
 #   limitations under the License.
 #
 
-  - name: 5.2.1.1 Configure Data Retention
+  - name: 5.2.1.1 Configure Data Retention (Not Scored)
     lineinfile: >
       state=present
       dest=/etc/audit/auditd.conf
       regexp="^max_log_file ="
       line="max_log_file = {{ max_log_file }}"
     notify: Reload auditd Rules
+    tags:
+      - notscored
+      - section5.2
+      - section5.2.1
+      - section5.2.1.1
 
-  - name: 5.2.1.2 Disable System on Audit Log Full
+  - name: 5.2.1.2 Disable System on Audit Log Full (Not Scored)
     lineinfile: >
       state=present
       dest=/etc/audit/auditd.conf
       regexp="^space_left_action ="
       line="space_left_action = {{ space_left_action }}"
     notify: Reload auditd Rules
+    tags:
+      - notscored
+      - section5.2
+      - section5.2.1
+      - section5.2.1.2
 
-  - name: 5.2.1.2 Disable System on Audit Log Full
+  - name: 5.2.1.2 Disable System on Audit Log Full (Not Scored)
     lineinfile: >
       state=present
       dest=/etc/audit/auditd.conf
       regexp="^action_mail_acct ="
       line="action_mail_acct = {{ action_mail_acct }}"
     notify: Reload auditd Rules
+    tags:
+      - notscored
+      - section5.2
+      - section5.2.1
+      - section5.2.1.2
 
-  - name: 5.2.1.2 Disable System on Audit Log Full
+  - name: 5.2.1.2 Disable System on Audit Log Full (Not Scored)
     lineinfile: >
       state=present
       dest=/etc/audit/auditd.conf
       regexp="^admin_space_left_action ="
       line="admin_space_left_action = {{ admin_space_left_action }}"
     notify: Reload auditd Rules
+    tags:
+      - notscored
+      - section5.2
+      - section5.2.1
+      - section5.2.1.2
 
-  - name: 5.2.1.3 Keep All Auditing Information
+  - name: 5.2.1.3 Keep All Auditing Information (Scored)
     lineinfile: >
       state=present
       dest=/etc/audit/auditd.conf
       regexp="^max_log_file_action ="
       line="max_log_file_action = {{ max_log_file_action }}"
     notify: Reload auditd Rules
+    tags:
+      - scored
+      - section5.2
+      - section5.2.1
+      - section5.2.1.3
 
-  - name: 5.2.2 Enable auditd Service
+  - name: 5.2.2 Enable auditd Service (Scored)
     service: >
       name=auditd
       enabled=yes
       state=running
+    tags:
+      - scored
+      - section5.2
+      - section5.2.2
 
-  - name: 5.2.3 Enable Auditing for Processes That Start Prior to auditd
+  - name: 5.2.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
     lineinfile: >
       state=present
       dest=/etc/grub.conf
       backrefs=yes
       regexp="(^\s*kernel.*)$(?<!audit=1)"
       line="\1 audit=1"
+    tags:
+      - scored
+      - section5.2
+      - section5.2.3
 
-  - name: 5.2.4 - 5.2.18 Configure auditd Rules
+  - name: 5.2.4 - 5.2.18 Configure auditd Rules (Scored)
     copy: >
       src=etc/audit/audit.rules
       dest=/etc/audit/audit.rules
     notify: Reload auditd Rules
-
+    tags:
+      - scored
+      - section5.2
+      - section5.2.4
+      - section5.2.5
+      - section5.2.6
+      - section5.2.7
+      - section5.2.8
+      - section5.2.9
+      - section5.2.10
+      - section5.2.11
+      - section5.2.12
+      - section5.2.13
+      - section5.2.14
+      - section5.2.15
+      - section5.2.16
+      - section5.2.17
+      - section5.2.18
