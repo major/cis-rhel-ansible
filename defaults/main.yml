@@ -79,3 +79,9 @@ disable_ipv6: no
 #ssh_allow_users:
 #ssh_deny_groups:
 #ssh_deny_users:
+
+# 9.1.10 - 9.1.12 to verify & find
+verify_find: no
+
+# 9.1.12 - 9.1.14 to verify rpm
+verify_rpm: no

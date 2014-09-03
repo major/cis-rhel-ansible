@@ -92,42 +92,49 @@
       - section9.1.9
 
   - name: 9.1.10 Find World Writable Files (Not Scored)
-    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
+    shell: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002"
+    when: verify_find
     tags:
       - notscored
       - section9.1
       - section9.1.10
 
   - name: 9.1.11 Find Un-owned Files and Directories (Scored)
-    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
-        tags:
+    shell: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls"
+    when: verify_find
+    tags:
       - scored
       - section9.1
       - section9.1.11
 
   - name: 9.1.12 Find Un-grouped Files and Directories (Scored)
-    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
+    shell: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls"
+    when: verify_find
     tags:
       - scored
       - section9.1
       - section9.1.12
 
   - name: 9.1.13 Find SUID System Executables (Not Scored)
-    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
+    shell: '/bin/rpm -V `/bin/rpm -qf /usr/bin/sudo`'
+    register: suid
+    when: verify_rpm
     tags:
       - notscored
       - section9.1
       - section9.1.13
 
   - name: 9.1.14 Find SGID System Executables (Not Scored)
-    debug: msg="This is best handled by AIDE or other file integrity monitoring systems."
+    shell: '/bin/rpm -V `/bin/rpm -qf /usr/bin/sudo`'
+    register: sgid
+    when: verify_rpm
     tags:
       - notscored
       - section9.1
       - section9.1.14
 
   - name: 9.2.1 Ensure Password Fields are Not Empty (Scored)
-    debug: msg="*** To do later"
+    debug: msg="** To do later"
     tags:
       - scored
       - section9.2
