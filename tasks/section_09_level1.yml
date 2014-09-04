@@ -144,7 +144,11 @@
       - section9.2.1
 
   - name: 9.2.2 Verify No Legacy "+" Entries Exist in /etc/passwd File (Scored)
-    debug: msg="*** To do later"
+    shell: /bin/grep '^+:' /etc/passwd
+    register: result9_2_2
+    failed_when: result9_2_2.rc == 0
+    always_run: yes
+    ignore_errors: yes
     tags:
       - scored
       - section9.2
