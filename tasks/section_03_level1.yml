@@ -249,12 +249,22 @@
       - section3.15
 
   - name: 3.16 Configure Mail Transfer Agent for Local-Only Mode (Scored)
-    lineinfile: >
-      dest=/etc/postfix/main.cf
+    yum: >
+      name=postfix
       state=present
+    tags:
+      - scored
+      - section3.16
+
+  - name: 3.16 Configure Mail Transfer Agent for Local-Only Mode (Scored)
+    lineinfile: >
+      backup=yes 
+      state=present 
+      dest=/etc/postfix/main.cf
+      backrefs=yes
       regexp="^inet_interfaces"
       line="inet_interfaces = localhost"
-      insertafter=EOF
+    ignore_errors: yes
     tags:
       - scored
       - section3.16

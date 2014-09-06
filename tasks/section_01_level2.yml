@@ -197,6 +197,7 @@
     selinux: >
       state=enforcing
       policy=targeted
+    ignore_errors: yes
     tags:
       - scored
       - section1.4
