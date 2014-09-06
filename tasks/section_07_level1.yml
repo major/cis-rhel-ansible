@@ -78,26 +78,11 @@
 
   - name: 7.4 Set Default umask for Users (Scored)
     lineinfile: 
-      dest=/etc/bashrc
-      regexp="^umask "
-      line="umask 77"
-    tags:
-      - scored
-      - section7.4
-
-  - name: 7.4 Set Default umask for Users (Scored)
-    file: >
-      state=touch
-      path=/etc/profile.d/cis.sh
-    tags:
-      - scored
-      - section7.4
-
-  - name: 7.4 Set Default umask for Users (Scored)
-    lineinfile: >
+      state=present
+      create=yes
       dest=/etc/profile.d/cis.sh
-      regexp="^umask "
       line="umask 77"
+    ignore_errors: True
     tags:
       - scored
       - section7.4
