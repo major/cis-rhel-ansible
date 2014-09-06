@@ -314,6 +314,7 @@
   - name: 4.6.2 Disable SCTP (Not Scored)
     lineinfile: >
       state=present
+      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install sctp /bin/true"
     tags:
@@ -324,6 +325,7 @@
   - name: 4.6.3 Disable RDS (Not Scored)
     lineinfile: >
       state=present
+      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install rds /bin/true"
     tags:
@@ -334,6 +336,7 @@
   - name: 4.6.4 Disable TIPC (Not Scored)
     lineinfile: >
       state=present
+      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install tipc /bin/true"
     tags:
