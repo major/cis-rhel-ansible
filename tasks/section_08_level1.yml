@@ -15,72 +15,29 @@
 #   limitations under the License.
 #
 
-# stat /etc/motd to capture file type
   - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
-    shell: stat -c=%F /etc/motd
-    register: stat_motd
-    changed_when: false
-    ignore_errors: yes
-    always_run: yes
+    stat: path=/etc/{{ item }}
+    register: stats
+    with_items:
+      - motd
+      - issue
+      - issue.net
     tags:
       - scored
       - section8.1
 
-# Remove symlink if /etc/motd is a symlink
   - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     file: >
       name=/etc/motd 
       state=absent
     changed_when: false
-    when: stat_motd.stdout == '=symbolic link'
+    with_items: 
+      - stats.results
+    when: item.islnk is defined
     tags:
       - scored
       - section8.1
 
-# stat /etc/issue to capture file type
-  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
-    shell: stat -c=%F /etc/issue
-    register: stat_issue
-    changed_when: false
-    ignore_errors: yes
-    always_run: yes
-    tags:
-      - scored
-      - section8.1
-
-# Remove symlink if /etc/issue is a symlink
-  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
-    file: >
-      name=/etc/issue 
-      state=absent
-    changed_when: false
-    when: stat_issue.stdout == '=symbolic link'
-    tags:
-      - scored
-
-# stat /etc/issue.net to capture file type
-  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
-    shell: stat -c=%F /etc/issue.net
-    register: stat_issue_net
-    changed_when: false
-    ignore_errors: yes
-    always_run: yes
-    tags:
-      - scored
-      - section8.1
-
-# Remove symlink if /etc/issue.net is a symlink
-  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
-    file: >
-      name=/etc/issue.net
-      state=absent
-    changed_when: false
-    when: stat_issue_net.stdout == '=symbolic link'
-    tags:
-      - scored
-      - section8.1
-
-# Populate /etc/motd, /etc/issue & /etc/issue.net with official content
   - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     copy: >
       src=etc/{{item}}
