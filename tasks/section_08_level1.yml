@@ -37,15 +37,6 @@
       - scored
       - section8.1
 
-# Populate /etc/motd with official content
-  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
-    copy: >
-      src=etc/motd
-      dest=/etc/motd
-    tags:
-      - scored
-      - section8.1
-
 # stat /etc/issue to capture file type
   - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     shell: stat -c=%F /etc/issue
@@ -66,16 +57,6 @@
     when: stat_issue.stdout == '=symbolic link'
     tags:
       - scored
-      - section8.1
-
-# Populate /etc/issue with official content
-  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
-    copy: >
-      src=etc/issue
-      dest=/etc/issue
-    tags:
-      - scored
-      - section8.1
 
 # stat /etc/issue.net to capture file type
   - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
@@ -99,11 +80,15 @@
       - scored
       - section8.1
 
-# Populate /etc/issue with official content
+# Populate /etc/motd, /etc/issue & /etc/issue.net with official content
   - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     copy: >
-      src=etc/issue.net
-      dest=/etc/issue.net
+      src=etc/{{item}}
+      dest=/etc/{{item}}
+    with_items:
+      - motd
+      - issue
+      - issue.net
     tags:
       - scored
       - section8.1
