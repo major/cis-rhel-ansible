@@ -147,6 +147,7 @@
     shell: /bin/grep '^+:' /etc/passwd
     register: result9_2_2
     failed_when: result9_2_2.rc == 0
+    changed_when: result9_2_2.rc == 0
     always_run: yes
     ignore_errors: yes
     tags:
@@ -155,14 +156,24 @@
       - section9.2.2
 
   - name: 9.2.3 Verify No Legacy "+" Entries Exist in /etc/shadow File (Scored)
-    debug: msg="*** To do later"
+    shell: /bin/grep '^+:' /etc/shadow
+    register: result9_2_3
+    failed_when: result9_2_3.rc == 0
+    changed_when: result9_2_3.rc == 0
+    always_run: yes
+    ignore_errors: yes
     tags:
       - scored
       - section9.2
       - section9.2.3
 
   - name: 9.2.4 Verify No Legacy "+" Entries Exist in /etc/group File (Scored)
-    debug: msg="*** To do later"
+    shell: /bin/grep '^+:' /etc/group
+    register: result9_2_4
+    failed_when: result9_2_4.rc == 0
+    changed_when: result9_2_4.rc == 0
+    always_run: yes
+    ignore_errors: yes
     tags:
       - scored
       - section9.2
