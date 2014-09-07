@@ -81,7 +81,7 @@
       state=present
       create=yes
       dest=/etc/profile.d/cis.sh
-      line="umask 77"
+      line="umask 077"
     ignore_errors: True
     tags:
       - scored
