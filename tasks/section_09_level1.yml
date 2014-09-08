@@ -262,9 +262,13 @@
       - section9.2.15
 
   - name: 9.2.16 Check for Duplicate User Names (Scored)
-    debug: msg="*** To do later"
+    shell: cut -f1 -d':' /etc/passwd | sort | uniq -c | sort -n | awk ' $1 > 1 {print $2}'
+    register: result9_2_16
+    changed_when: "result9_2_16.stdout"
+    always_run: yes
     tags:
       - scored
+      - check-only
       - section9.2
       - section9.2.16
 
