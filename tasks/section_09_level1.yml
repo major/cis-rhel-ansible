@@ -276,9 +276,13 @@
       - section9.2.17
 
   - name: 9.2.18 Check for Presence of User .netrc Files (Scored)
-    debug: msg="*** To do later"
+    shell:  for h in $(/bin/awk -F':' '$7 !~ /\/sbin\/nologin/ && $7 !~ /\/bin\/false/ { print $6 }' /etc/passwd); do if [[ -f $h/.netrc && -s $h/.netrc ]]; then echo $h; fi ; done
+    register: result9_2_18
+    changed_when: "result9_2_18.stdout"
+    always_run: yes
     tags:
       - scored
+      - check-only
       - section9.2
       - section9.2.18
 
