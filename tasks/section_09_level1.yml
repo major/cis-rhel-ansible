@@ -255,9 +255,13 @@
       - section9.2.14
 
   - name: 9.2.15 Check for Duplicate GIDs (Scored)
-    debug: msg="*** To do later"
+    shell: for dupeID in  $(cut -f3 -d":" /etc/group | sort | uniq -c | sort -n | awk ' $1 > 1 {print $2}'); do awk -F':' -v dupeid=$dupeID '$3 == dupeid {print $1}' /etc/group   ; done
+    register: result9_2_15
+    changed_when: "result9_2_15.stdout"
+    always_run: yes
     tags:
       - scored
+      - check-only
       - section9.2
       - section9.2.15
 
