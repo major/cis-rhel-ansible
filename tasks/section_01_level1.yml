@@ -182,6 +182,7 @@
   - name: 1.5.1 Get Absolute Path to grub.conf
     command: readlink -f /etc/grub.conf
     register: readlink
+    changed_when: false
     always_run: yes
     tags:
       - scored
@@ -201,6 +202,7 @@
   - name: 1.5.2 Get Absolute Path to grub.conf
     command: readlink -f /etc/grub.conf
     register: readlink
+    changed_when: false
     always_run: yes
     tags:
       - scored

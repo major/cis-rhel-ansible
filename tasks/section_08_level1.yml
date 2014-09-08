@@ -16,9 +16,56 @@
 #
 
   - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    stat: path=/etc/{{ item }}
+    register: stats
+    with_items:
+      - motd
+      - issue
+      - issue.net
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    file: >
+      name=/etc/motd 
+      state=absent
+    changed_when: false
+    with_items: 
+      - stats.results
+    when: item.islnk is defined
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    file: >
+      name=/etc/issue
+      state=absent
+    changed_when: false
+    with_items: 
+      - stats.results
+    when: item.islnk is defined
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    file: >
+      name=/etc/issue.net
+      state=absent
+    changed_when: false
+    with_items: 
+      - stats.results
+    when: item.islnk is defined
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
     copy: >
-      src=etc/{{ item }}
-      dest=/etc/{{ item }}
+      src=etc/{{item}}
+      dest=/etc/{{item}}
     with_items:
       - motd
       - issue

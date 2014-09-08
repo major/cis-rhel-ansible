@@ -17,9 +17,12 @@
 
   - name: 7.1.1 Set Password Expiration Days (Scored)
     lineinfile: >
+      backup=yes 
+      state=present 
       dest=/etc/login.defs
-      regexp="^PASS_MAX_DAYS "
-      line="PASS_MAX_DAYS 90"
+      backrefs=yes
+      regexp="^PASS_MAX_DAYS\s+"
+      line="PASS_MAX_DAYS\t90"
     tags:
       - scored
       - section7.1
@@ -27,9 +30,12 @@
 
   - name: 7.1.2 Set Password Change Minimum Number of Days (Scored)
     lineinfile: >
+      backup=yes 
+      state=present 
       dest=/etc/login.defs
-      regexp="^PASS_MIN_DAYS "
-      line="PASS_MIN_DAYS 7"
+      backrefs=yes
+      regexp="^PASS_MIN_DAYS\s+"
+      line="PASS_MIN_DAYS\t7"
     tags:
       - scored
       - section7.1
@@ -37,9 +43,12 @@
 
   - name: 7.1.3 Set Password Expiring Warning Days (Scored)
     lineinfile: >
+      backup=yes 
+      state=present 
       dest=/etc/login.defs
-      regexp="^PASS_WARN_AGE "
-      line="PASS_WARN_AGE 7"
+      backrefs=yes
+      regexp="^PASS_WARN_AGE\s+"
+      line="PASS_WARN_AGE\t7"
     tags:
       - scored
       - section7.1
@@ -69,26 +78,11 @@
 
   - name: 7.4 Set Default umask for Users (Scored)
     lineinfile: 
-      dest=/etc/bashrc
-      regexp="^umask "
-      line="umask 77"
-    tags:
-      - scored
-      - section7.4
-
-  - name: 7.4 Set Default umask for Users (Scored)
-    file: >
-      state=touch
-      path=/etc/profile.d/cis.sh
-    tags:
-      - scored
-      - section7.4
-
-  - name: 7.4 Set Default umask for Users (Scored)
-    lineinfile: >
+      state=present
+      create=yes
       dest=/etc/profile.d/cis.sh
-      regexp="^umask "
-      line="umask 77"
+      line="umask 077"
+    ignore_errors: True
     tags:
       - scored
       - section7.4

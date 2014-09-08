@@ -15,10 +15,23 @@
 #   limitations under the License.
 #
 
+  - name: Create /etc/modprobe.d/CIS.conf with root ownership & mode
+    file: path=/etc/modprobe.d/CIS.conf state=touch owner=root group=root mode=0600
+    changed_when: false
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.18
+      - section1.1.19
+      - section1.1.20
+      - section1.1.21
+      - section1.1.22
+      - section1.1.23
+      - section1.1.24
+
   - name: 1.1.18 Disable Mounting of cramfs Filesystems (Not Scored)
     lineinfile: >
       state=present
-      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install cramfs /bin/true"
     tags:
@@ -29,7 +42,6 @@
   - name: 1.1.19 Disable Mounting of freevxfs Filesystems (Not Scored)
     lineinfile: >
       state=present
-      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install freevxfs /bin/true"
     tags:
@@ -40,7 +52,6 @@
   - name: 1.1.20 Disable Mounting of jffs2 Filesystems (Not Scored)
     lineinfile: >
       state=present
-      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install jffs2 /bin/true"
     tags:
@@ -51,7 +62,6 @@
   - name: 1.1.21 Disable Mounting of hfs Filesystems (Not Scored)
     lineinfile: >
       state=present
-      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install hfs /bin/true"
     tags:
@@ -62,7 +72,6 @@
   - name: 1.1.22 Disable Mounting of hfsplus Filesystems (Not Scored)
     lineinfile: >
       state=present
-      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install hfsplus /bin/true"
     tags:
@@ -73,7 +82,6 @@
   - name: 1.1.23 Disable Mounting of squashfs Filesystems (Not Scored)
     lineinfile: >
       state=present
-      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install squashfs /bin/true"
     tags:
@@ -84,7 +92,6 @@
   - name: 1.1.24 Disable Mounting of udf Filesystems (Not Scored)
     lineinfile: >
       state=present
-      create=yes
       dest=/etc/modprobe.d/CIS.conf
       line="install udf /bin/true"
     tags:
@@ -197,6 +204,7 @@
     selinux: >
       state=enforcing
       policy=targeted
+    ignore_errors: yes
     tags:
       - scored
       - section1.4

@@ -92,42 +92,100 @@
       - section9.1.9
 
   - name: 9.1.10 Find World Writable Files (Not Scored)
-    debug: msg="df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002"
+    shell: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002"
+    when: verify_find
     tags:
       - notscored
       - section9.1
       - section9.1.10
 
+  - name: 9.1.11 Find Un-owned Files and Directories (Scored)
+    shell: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls"
+    when: verify_find
+    tags:
+      - scored
+      - section9.1
+      - section9.1.11
+
+  - name: 9.1.12 Find Un-grouped Files and Directories (Scored)
+    shell: "df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls"
+    when: verify_find
+    tags:
+      - scored
+      - section9.1
+      - section9.1.12
+
+  - name: 9.1.13 Find SUID System Executables (Not Scored)
+    shell: '/bin/rpm -V `/bin/rpm -qf /usr/bin/sudo`'
+    register: suid
+    when: verify_rpm
+    tags:
+      - notscored
+      - section9.1
+      - section9.1.13
+
+  - name: 9.1.14 Find SGID System Executables (Not Scored)
+    shell: '/bin/rpm -V `/bin/rpm -qf /usr/bin/sudo`'
+    register: sgid
+    when: verify_rpm
+    tags:
+      - notscored
+      - section9.1
+      - section9.1.14
+
   - name: 9.2.1 Ensure Password Fields are Not Empty (Scored)
-    debug: msg="*** To do later"
+    shell: /bin/cat /etc/shadow | /bin/awk -F':' '($2 == "" ) { print $1 " does not have a password "}'
+    register: result9_2_1
+    changed_when: "result9_2_1.stdout"
+    always_run: yes
     tags:
       - scored
       - section9.2
       - section9.2.1
 
   - name: 9.2.2 Verify No Legacy "+" Entries Exist in /etc/passwd File (Scored)
-    debug: msg="*** To do later"
+    shell: /bin/grep '^+:' /etc/passwd
+    register: result9_2_2
+    failed_when: result9_2_2.rc == 0
+    changed_when: result9_2_2.rc == 0
+    always_run: yes
+    ignore_errors: yes
     tags:
       - scored
       - section9.2
       - section9.2.2
 
   - name: 9.2.3 Verify No Legacy "+" Entries Exist in /etc/shadow File (Scored)
-    debug: msg="*** To do later"
+    shell: /bin/grep '^+:' /etc/shadow
+    register: result9_2_3
+    failed_when: result9_2_3.rc == 0
+    changed_when: result9_2_3.rc == 0
+    always_run: yes
+    ignore_errors: yes
     tags:
       - scored
       - section9.2
       - section9.2.3
 
   - name: 9.2.4 Verify No Legacy "+" Entries Exist in /etc/group File (Scored)
-    debug: msg="*** To do later"
+    shell: /bin/grep '^+:' /etc/group
+    register: result9_2_4
+    failed_when: result9_2_4.rc == 0
+    changed_when: result9_2_4.rc == 0
+    always_run: yes
+    ignore_errors: yes
     tags:
       - scored
       - section9.2
       - section9.2.4
 
   - name: 9.2.5 Verify No UID 0 Accounts Exist Other Than root (Scored)
-    debug: msg="*** To do later"
+    shell: /bin/awk -F':' '($3 == 0) { print $1 }' /etc/passwd | grep -qx 'root'
+    register: result9_2_5
+    failed_when: result9_2_5.rc != 0
+    changed_when: result9_2_5.rc != 0
+    always_run: yes
+    ignore_errors: yes
     tags:
       - scored
       - section9.2
@@ -197,36 +255,60 @@
       - section9.2.14
 
   - name: 9.2.15 Check for Duplicate GIDs (Scored)
-    debug: msg="*** To do later"
+    shell: for dupeID in  $(cut -f3 -d":" /etc/group | sort | uniq -c | sort -n | awk ' $1 > 1 {print $2}'); do awk -F':' -v dupeid=$dupeID '$3 == dupeid {print $1}' /etc/group   ; done
+    register: result9_2_15
+    changed_when: "result9_2_15.stdout"
+    always_run: yes
     tags:
       - scored
+      - check-only
       - section9.2
       - section9.2.15
 
   - name: 9.2.16 Check for Duplicate User Names (Scored)
-    debug: msg="*** To do later"
+    shell: cut -f1 -d':' /etc/passwd | sort | uniq -c | sort -n | awk ' $1 > 1 {print $2}'
+    register: result9_2_16
+    changed_when: "result9_2_16.stdout"
+    always_run: yes
     tags:
       - scored
+      - check-only
       - section9.2
       - section9.2.16
 
   - name: 9.2.17 Check for Duplicate Group Names (Scored)
-    debug: msg="*** To do later"
+    shell: cut -f1 -d':' /etc/group | sort | uniq -c | sort -n | awk ' $1 > 1 {print $2}'
+    register: result9_2_17
+    changed_when: "result9_2_17.stdout"
+    always_run: yes
     tags:
       - scored
+      - check-only
       - section9.2
       - section9.2.17
 
   - name: 9.2.18 Check for Presence of User .netrc Files (Scored)
-    debug: msg="*** To do later"
+    shell:  for h in $(/bin/awk -F':' '$7 !~ /\/sbin\/nologin/ && $7 !~ /\/bin\/false/ { print $6 }' /etc/passwd); do if [[ -f $h/.netrc && -s $h/.netrc ]]; then echo $h; fi ; done
+    register: result9_2_18
+    changed_when: "result9_2_18.stdout"
+    always_run: yes
     tags:
       - scored
+      - check-only
       - section9.2
       - section9.2.18
 
   - name: 9.2.19 Check for Presence of User .forward Files (Scored)
-    debug: msg="*** To do later"
+    shell:  for h in $(/bin/awk -F':' '$7 !~ /\/sbin\/nologin/ && $7 !~ /\/bin\/false/ { print $6 }' /etc/passwd); do if [[ -f $h/.forward && -s $h/.forward ]]; then echo $h; fi ; done
+    register: result9_2_19
+    changed_when: "result9_2_19.stdout"
+    always_run: yes
     tags:
       - scored
+      - check-only
       - section9.2
       - section9.2.19
+
+#  - debug: var=result9_2_19.stdout
+#    tags:
+#      - section9.2.19
