@@ -23,6 +23,7 @@ For full details and caveats, refer to the [notes](NOTES.md).
 The repository contains the scaffold to use the CIS ansible role.  The role itself exists in the [ansible-role-cis repository](https://github.com/major/ansible-role-cis) but we can bring it in easily with `git submodule`:
 
     git clone https://github.com/major/cis-rhel-ansible.git
+    cd cis-rhel-ansible
     git submodule update --init
 
 If you're not familiar with [submodules](http://git-scm.com/book/en/Git-Tools-Submodules) (they can be a bit weird), here's how you pull the latest commits from this repository as well as the submodule:
