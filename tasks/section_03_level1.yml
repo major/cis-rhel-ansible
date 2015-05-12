@@ -130,7 +130,7 @@
     yum: >
       name=openldap-clients
       state=absent
-    when: not ldap_client
+    when: ldap_client
     tags:
       - notscored
       - section3.7
@@ -139,7 +139,7 @@
     yum: >
       name=openldap-servers
       state=absent
-    when: not ldap_server
+    when: ldap_server
     tags:
       - notscored
       - section3.7
@@ -180,7 +180,7 @@
       enabled=no
     when:
       - rpcbind.stat.exists
-      - not nfs
+      - nfs
     tags:
       - notscored
       - section3.8
@@ -189,7 +189,7 @@
     yum: >
       name=bind
       state=absent
-    when: not dns
+    when: dns
     tags:
       - notscored
       - section3.9
@@ -198,7 +198,7 @@
     yum: >
       name=vsftpd
       state=absent
-    when: not ftp
+    when: ftp
     tags:
       - notscored
       - section3.10
@@ -207,7 +207,7 @@
     yum: >
       name=httpd
       state=absent
-    when: not httpd
+    when: httpd
     tags:
       - notscored
       - section3.11
@@ -216,7 +216,7 @@
     yum: >
       name=dovecot
       state=absent
-    when: not dovecot
+    when: dovecot
     tags:
       - notscored
       - section3.12
@@ -225,7 +225,7 @@
     yum: >
       name=samba
       state=absent
-    when: not samba
+    when: samba
     tags:
       - notscored
       - section3.13
@@ -234,7 +234,7 @@
     yum: >
       name=squid
       state=absent
-    when: not squid
+    when: squid
     tags:
       - notscored
       - section3.14
@@ -243,7 +243,7 @@
     yum: >
       name=net-snmp
       state=absent
-    when: not snmp
+    when: snmp
     tags:
       - notscored
       - section3.15
