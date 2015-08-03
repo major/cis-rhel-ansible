@@ -356,6 +356,11 @@
       - section6.2
       - section6.2.14
 
+  - name: 6.3.1 Ensure authconfig package is installed
+    yum:
+      name: authconfig
+      state: present
+
   - name: 6.3.1 Upgrade Password Hashing Algorithm to SHA-512 (Scored)
     shell: 'authconfig --test | grep hashing'
     register: password_hash_algorithm
