@@ -6,4 +6,4 @@ install:
   - pip install ansible
 
 script:
-  - ansible-playbook -i hosts --syntax-check
+  - ansible-playbook -i hosts playbook.yml --syntax-check
