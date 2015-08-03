@@ -1,0 +1,240 @@
+---
+#
+# Copyright 2014 Major Hayden
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+
+  - name: 2.1.1 Remove telnet-server (Scored)
+    yum: >
+      name=telnet-server
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.1
+
+  - name: 2.1.2 Remove telnet Clients (Scored)
+    yum: >
+      name=telnet
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.2
+
+  - name: 2.1.3 Remove rsh-server (Scored)
+    yum: >
+      name=rsh-server
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.3
+
+  - name: 2.1.4 Remove rsh (Scored)
+    yum: >
+      name=rsh
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.4
+
+  - name: 2.1.5 Remove NIS Client (Scored)
+    yum: > 
+      name=ypbind
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.5
+
+  - name: 2.1.6 Remove NIS Server (Scored)
+    yum: >
+      name=ypserv
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.6
+
+  - name: 2.1.7 Remove tftp (Scored)
+    yum: >
+      name=tftp
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.7
+
+  - name: 2.1.8 Remove tftp-server (Scored)
+    yum: >
+      name=tftp-server
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.8
+
+  - name: 2.1.9 Remove talk (Scored)
+    yum: >
+      name=talk
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.9
+
+  - name: 2.1.10 Remove talk-server (Scored)
+    yum: >
+      name=talk-server
+      state=absent
+    tags:
+      - scored
+      - section2.1
+      - section2.1.10
+
+  - name: 2.1.12 Disable chargen-dgram (check if exists)
+    stat: path=/etc/xinetd.d/chargen-dgram
+    register: chargen_dgram
+    tags:
+      - scored
+      - section2.1
+      - section2.1.12
+
+  - name: 2.1.12 Disable chargen-dgram (disable xinetd service)
+    service: >
+        name=chargen-dgram
+        state=stopped
+        enabled=no
+    when: chargen_dgram.stat.exists
+    tags:
+      - scored
+      - section2.1
+      - section2.1.12
+
+  - name: 2.1.13 Disable chargen-stream (check if exists) (Scored)
+    stat: path=/etc/xinetd.d/chargen-stream
+    register: chargen_stream
+    tags:
+      - scored
+      - section2.1
+      - section2.1.13
+
+  - name: 2.1.13 Disable chargen-stream (disable xinetd service) (Scored)
+    service: >
+        name=chargen-stream
+        state=stopped
+        enabled=no
+    when: chargen_stream.stat.exists
+    tags:
+      - scored
+      - section2.1
+      - section2.1.13
+
+  - name: 2.1.14 Disable daytime-dgram (check if exists) (Scored)
+    stat: path=/etc/xinetd.d/daytime-dgram
+    register: daytime_dgram
+    tags:
+      - scored
+      - section2.1
+      - section2.1.14
+
+  - name: 2.1.14 Disable daytime-dgram (disable xinetd service) (Scored)
+    service: >
+        name=daytime-dgram
+        state=stopped
+        enabled=no
+    when: daytime_dgram.stat.exists
+    tags:
+      - scored
+      - section2.1
+      - section2.1.14
+
+  - name: 2.1.15 Disable daytime-stream (check if exists) (Scored)
+    stat: path=/etc/xinetd.d/daytime-stream
+    register: daytime_stream
+    tags:
+      - scored
+      - section2.1
+      - section2.1.15
+
+  - name: 2.1.15 Disable daytime-stream (disable xinetd service) (Scored)
+    service: >
+        name=daytime-stream
+        state=stopped
+        enabled=no
+    when: daytime_stream.stat.exists
+    tags:
+      - scored
+      - section2.1
+      - section2.1.15
+
+  - name: 2.1.16 Disable echo-dgram (check if exists) (Scored)
+    stat: path=/etc/xinetd.d/echo-dgram
+    register: echo_dgram
+    tags:
+      - scored
+      - section2.1
+      - section2.1.16
+
+  - name: 2.1.16 Disable echo-dgram (disable xinetd service) (Scored)
+    service: >
+        name=echo-dgram
+        state=stopped
+        enabled=no
+    when: echo_dgram.stat.exists
+    tags:
+      - scored
+      - section2.1
+      - section2.1.16
+
+  - name: 2.1.17 Disable echo-stream (check if exists) (Scored)
+    stat: path=/etc/xinetd.d/echo-stream
+    register: echo_stream
+    tags:
+      - scored
+      - section2.1
+      - section2.1.17
+
+  - name: 2.1.17 Disable echo-stream (disable xinetd service) (Scored)
+    service: >
+        name=echo-stream
+        state=stopped
+        enabled=no
+    when: echo_stream.stat.exists
+    tags:
+      - scored
+      - section2.1
+      - section2.1.17
+
+  - name: 2.1.18 Disable tcpmux-server (check if exists) (Scored)
+    stat: path=/etc/xinetd.d/tcpmux-server
+    register: tcpmux_server
+    tags:
+      - scored
+      - section2.1
+      - section2.1.18
+
+  - name: 2.1.18 Disable tcpmux-server (disable xinetd service) (Scored)
+    service: >
+        name=tcpmux-server
+        state=stopped
+        enabled=no
+    when: tcpmux_server.stat.exists
+    tags:
+      - scored
+      - section2.1
+      - section2.1.18
+      

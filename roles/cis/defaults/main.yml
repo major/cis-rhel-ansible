@@ -1,0 +1,87 @@
+# Should we configure AIDE on the system? (CIS 1.3)
+# Options:
+#   yes: install and configure AIDE
+#   no: do not install or configure AIDE
+configure_aide: yes
+
+# auditd (CIS 5.2)
+# These are sensible defaults but you may change these to fit your system.
+action_mail_acct: "root"
+admin_space_left_action: "halt"
+max_log_file: 100
+max_log_file_action: "keep_logs"
+space_left_action: "email"
+
+# rsyslog (5.1.6)
+# Options:
+#   yes: configure rsyslog to receive remote logs from other servers
+#   no: do not configure rsyslog to receive remote logs from other servers
+rsyslog_host: no
+
+# ----------------------------------------------------------------------------
+# WARNING
+# THIS SECTION IS HAZARDOUS TO PRODUCTION SERVERS. SERIOUSLY.
+# ----------------------------------------------------------------------------
+# Options:
+#   yes: disable/uninstall these services to meet CIS requirements
+#   no: do not alter these services from their current statuc
+dns: no
+dovecot: no
+ftp: no
+httpd: no
+ldap_client: no
+ldap_server: no
+nfs: no
+samba: no
+snmp: no
+squid: no
+
+# CIS 7.5 says that users who are inactive for over 35 days must have their
+# accounts disabled. This could cause issues in some environments.
+# Options:
+#   yes: disable accounts inactive > 35 days per CIS requirements
+#   no: don't adjust inactive account settings
+lock_inactive: no
+
+# Enable iptables (CIS 4.7)
+# You should check to see that your current iptables configuration in
+# /etc/sysconfig/iptables is configured properly so that you don't lose access
+# to your server when iptables is enabled.  If you're alreading using iptables,
+# then this setting won't affect you either way.
+# Options:
+#   yes: enable iptables and load the rules from /etc/sysconfig/iptables
+#   no: don't alter iptables whatsoever
+enable_iptables: no
+
+# Enable ip6tables (CIS 4.8)
+# You should check to see that your current ip6tables configuration in
+# /etc/sysconfig/ip6tables is configured properly so that you don't lose access
+# to your server when ip6tables is enabled.  If you're alreading using ip6tables,
+# then this setting won't affect you either way.
+# Options:
+#   yes: enable ip6tables and load the rules from /etc/sysconfig/ip6tables
+#   no: don't alter ip6tables whatsoever
+enable_ip6tables: no
+
+# Disable IPv6 (CIS 4.4.2)
+# It's recommended to configure IPv6 properly instead of disabling it entirely.
+# If your organization really doesn't use IPv6 at all, you could accept the
+# CIS requirements and disable IPv6.
+# Options:
+#   yes: disable IPv6 per CIS requirements
+#   no: don't alter the IPv6 configuration
+disable_ipv6: no
+
+# SSH configurations (CIS Section 6.2)
+# Uncomment these variables and set them accordingly to have them applied. They
+# are not applied by default.
+#ssh_allow_groups:
+#ssh_allow_users:
+#ssh_deny_groups:
+#ssh_deny_users:
+
+# 9.1.10 - 9.1.12 to verify & find
+verify_find: no
+
+# 9.1.12 - 9.1.14 to verify rpm
+verify_rpm: no

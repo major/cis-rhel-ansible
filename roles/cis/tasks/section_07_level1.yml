@@ -1,0 +1,108 @@
+---
+#
+# Copyright 2014 Major Hayden
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+
+  - name: 7.1.1 Set Password Expiration Days (Scored)
+    lineinfile: >
+      backup=yes 
+      state=present 
+      dest=/etc/login.defs
+      backrefs=yes
+      regexp="^PASS_MAX_DAYS\s+"
+      line="PASS_MAX_DAYS\t90"
+    tags:
+      - scored
+      - section7.1
+      - section7.1.1
+
+  - name: 7.1.2 Set Password Change Minimum Number of Days (Scored)
+    lineinfile: >
+      backup=yes 
+      state=present 
+      dest=/etc/login.defs
+      backrefs=yes
+      regexp="^PASS_MIN_DAYS\s+"
+      line="PASS_MIN_DAYS\t7"
+    tags:
+      - scored
+      - section7.1
+      - section7.1.2
+
+  - name: 7.1.3 Set Password Expiring Warning Days (Scored)
+    lineinfile: >
+      backup=yes 
+      state=present 
+      dest=/etc/login.defs
+      backrefs=yes
+      regexp="^PASS_WARN_AGE\s+"
+      line="PASS_WARN_AGE\t7"
+    tags:
+      - scored
+      - section7.1
+      - section7.1.3
+
+  - name: 7.2 Disable System Accounts (Scored) - preparation
+    shell: awk -F':' '($3<500 && $1!="root" && $1!="sync" && $1!="shutdown" && $1!="sync" && $1!="shutdown" && $1!="halt" && $7!="/sbin/nologin") { print $1 }' /etc/passwd
+    register: enabled_system_accounts
+    changed_when: false
+    tags:
+      - scored
+      - section7.2
+
+  - name: 7.2 Disable System Accounts (Scored)
+    command: /usr/sbin/usermod -s /sbin/nologin {{ item }}
+    with_items: enabled_system_accounts.stdout_lines
+    tags:
+      - scored
+      - section7.2
+
+  - name: 7.3 Set Default Group for root Account (Scored)
+    user: >
+      name=root
+      group=root
+    tags:
+      - scored
+      - section7.3
+
+  - name: 7.4 Set Default umask for Users (Scored)
+    lineinfile: 
+      state=present
+      create=yes
+      dest=/etc/profile.d/cis.sh
+      line="umask 077"
+    ignore_errors: true
+    tags:
+      - scored
+      - section7.4
+
+  - name: Ensure that /etc/profile.d/cis.sh has correct owner, group and mode
+    file: 
+      path=/etc/profile.d/cis.sh 
+      owner=root
+      group=root
+      mode=0644
+    changed_when: false
+    tags:
+      - scored
+      - section7.4
+      
+  - name: 7.5 Lock Inactive User Accounts (Scored)
+    command: /usr/sbin/useradd -D -f 35
+    when: lock_inactive
+    tags:
+      - scored
+      - section7.5
+
