@@ -1,0 +1,410 @@
+---
+#
+# Copyright 2014 Major Hayden
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+
+  - name: 6.1.1 Enable anacron Daemon (Scored)
+    yum: >
+      name=cronie-anacron
+      state=present
+    tags:
+      - scored
+      - section6.1
+      - section6.1.1
+
+  - name: 6.1.2 Enable crond Daemon (Scored)
+    service: >
+      name=crond
+      enabled=yes
+      state=started
+    tags:
+      - scored
+      - section6.1
+      - section6.1.2
+
+  - name: 6.1.3 Set User/Group Owner and Permission on /etc/anacrontab (Scored)
+    file: >
+      path=/etc/anacrontab
+      owner=root
+      group=root
+      mode=0600
+    tags:
+      - scored
+      - section6.1
+      - section6.1.3
+
+  - name: 6.1.4 Set User/Group Owner and Permission on /etc/crontab (Scored)
+    file: >
+      path=/etc/crontab
+      owner=root
+      group=root
+      mode=0600
+    tags:
+      - scored
+      - section6.1
+      - section6.1.4
+
+  - name: 6.1.5 Set User/Group Owner and Permission on /etc/cron.hourly (Scored)
+    file: >
+      path=/etc/cron.hourly
+      owner=root
+      group=root
+      mode=0600
+    tags:
+      - scored
+      - section6.1
+      - section6.1.5
+
+  - name: 6.1.6 Set User/Group Owner and Permission on /etc/cron.daily  (Scored)
+    file: >
+      path=/etc/cron.daily
+      owner=root
+      group=root
+      mode=0600
+    tags:
+      - scored
+      - section6.1
+      - section6.1.6
+
+  - name: 6.1.7 Set User/Group Owner and Permission on /etc/cron.weekly  (Scored)
+    file: >
+      path=/etc/cron.weekly
+      owner=root
+      group=root
+      mode=0600
+    tags:
+      - scored
+      - section6.1
+      - section6.1.7
+
+  - name: 6.1.8 Set User/Group Owner and Permission on /etc/cron.monthly (Scored)
+    file: >
+      path=/etc/cron.monthly
+      owner=root
+      group=root
+      mode=0600
+    tags:
+      - scored
+      - section6.1
+      - section6.1.8
+
+  - name: 6.1.9 Set User/Group Owner and Permission on /etc/cron.d (Scored)
+    file: >
+      path=/etc/cron.d
+      state=directory
+      owner=root
+      group=root
+      mode=0700
+    tags:
+      - scored
+      - section6.1
+      - section6.1.9
+
+  - name: 6.1.10 Restrict at Daemon (Scored)
+    file: >
+      path=/etc/at.deny
+      state=absent
+    tags:
+      - scored
+      - section6.1
+      - section6.1.10
+
+  - name: 6.1.10 Restrict at Daemon (Scored)
+    file: >
+      path=/etc/at.allow
+      state=touch
+      owner=root
+      group=root
+      mode=0600
+    tags:
+      - scored
+      - section6.1
+      - section6.1.10
+
+  - name: 6.1.11 Restrict at/cron to Authorized Users (Scored)
+    file: >
+      path=/etc/cron.deny
+      state=absent
+    tags:
+      - scored
+      - section6.1
+      - section6.1.11
+
+  - name: 6.1.11 Restrict at/cron to Authorized Users (Scored)
+    file: >
+      path=/etc/cron.allow
+      state=touch
+      owner=root
+      group=root
+      mode=0600
+    tags:
+      - scored
+      - section6.1
+      - section6.1.11
+
+  - name: 6.2.1 Set SSH Protocol to 2 (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^Protocol " line="Protocol 2"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.1
+
+  - name: 6.2.2 Set LogLevel to INFO (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^LogLevel "
+      line="LogLevel INFO"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.2
+
+  - name: 6.2.3 Set Permissions on /etc/ssh/sshd_config (Scored)
+    file: >
+      path=/etc/ssh/sshd_config
+      owner=root
+      group=root
+      mode=0600
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.3
+
+  - name: 6.2.4 Disable SSH X11 Forwarding (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^X11Forwarding "
+      line="X11Forwarding no"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.4
+
+  - name: 6.2.5 Set SSH MaxAuthTries to 4 or Less (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^MaxAuthTries "
+      line="MaxAuthTries 4"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.5
+
+  - name: 6.2.6 Set SSH IgnoreRhosts to Yes (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^IgnoreRhosts "
+      line="IgnoreRhosts yes"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.6
+
+  - name: 6.2.7 Set SSH HostbasedAuthentication to No (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^HostbasedAuthentication "
+      line="HostbasedAuthentication no"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.7
+
+  - name: 6.2.8 Disable SSH Root Login (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitRootLogin "
+      line="PermitRootLogin no"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.8
+
+  - name: 6.2.9 Set SSH PermitEmptyPasswords to No (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitEmptyPasswords "
+      line="PermitEmptyPasswords no"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.9
+
+  - name: 6.2.10 Do Not Allow Users to Set Environment Options (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitUserEnvironment "
+      line="PermitUserEnvironment no"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.10
+
+  - name: 6.2.11 Use Only Approved Cipher in Counter Mode (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^Ciphers "
+      line="Ciphers aes128-ctr,aes192-ctr,aes256-ctr"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.11
+
+  - name: 6.2.12 Set Idle Timeout Interval for User Login (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^ClientAliveInterval "
+      line="ClientAliveInterval 300"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.12
+
+  - name: 6.2.12 Set Idle Timeout Interval for User Login (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^ClientAliveCountMax "
+      line="ClientAliveCountMax 0"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.12
+
+  - name: 6.2.13 Limit Access via SSH (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^AllowGroups "
+      line="AllowGroups {{ ssh_allow_groups }}"
+    when: ssh_allow_groups is defined
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.13
+
+  - name: 6.2.13 Limit Access via SSH (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config 
+      regexp="^AllowUsers "
+      line="AllowUsers {{ ssh_allow_users }}"
+    when: ssh_allow_users is defined
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.13
+
+  - name: 6.2.13 Limit Access via SSH (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^DenyGroups "
+      line="DenyGroups {{ ssh_deny_groups }}"
+    when: ssh_deny_groups is defined
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.13
+
+  - name: 6.2.13 Limit Access via SSH (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^DenyUsers "
+      line="DenyUsers {{ ssh_deny_users }}"
+    when: ssh_deny_users is defined
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.13
+
+  - name: 6.2.14 Set SSH Banner (Scored)
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^Banner "
+      line="Banner /etc/issue.net"
+    notify: Reload sshd
+    tags:
+      - scored
+      - section6.2
+      - section6.2.14
+
+  - name: 6.3.1 Upgrade Password Hashing Algorithm to SHA-512 (Scored)
+    shell: 'authconfig --test | grep hashing'
+    register: password_hash_algorithm
+    always_run: yes
+    tags:
+      - scored
+      - section6.3
+      - section6.3.1
+
+  - name: 6.3.1 Upgrade Password Hashing Algorithm to SHA-512 (Scored)
+    shell: authconfig --passalgo=sha512 --update
+    when: '"sha512" not in password_hash_algorithm.stdout'
+    tags:
+      - scored
+      - section6.3
+      - section6.3.1
+
+  - name: 6.3.2 - 6.3.4 Configure PAM (Scored)
+    copy: >
+      src=etc/pam.d/system-auth
+      dest=/etc/pam.d/system-auth
+    tags:
+      - scored
+      - section6.3
+      - section6.3.2
+      - section6.3.3
+      - section6.3.4
+
+  - name: 6.3.2 - 6.3.4 Configure PAM (Scored)
+    copy: >
+      src=etc/pam.d/password-auth
+      dest=/etc/pam.d/password-auth
+    tags:
+      - scored
+      - section6.3
+      - section6.3.2
+      - section6.3.3
+      - section6.3.4
+
+  - name: 6.4 Restrict root login to system console (Not Scored)
+    debug: msg="Too restrictive for most environments."
+    tags:
+      - notscored
+      - section6.4
+
+  - name: 6.5 Restrict Access to the su Command (Scored)
+    copy: >
+      src=etc/pam.d/su
+      dest=/etc/pam.d/su
+    tags:
+      - scored
+      - section6.5

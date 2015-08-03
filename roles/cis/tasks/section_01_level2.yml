@@ -1,0 +1,236 @@
+---
+#
+# Copyright 2014 Major Hayden
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+
+  - name: Create /etc/modprobe.d/CIS.conf with root ownership & mode
+    file: path=/etc/modprobe.d/CIS.conf state=touch owner=root group=root mode=0600
+    changed_when: false
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.18
+      - section1.1.19
+      - section1.1.20
+      - section1.1.21
+      - section1.1.22
+      - section1.1.23
+      - section1.1.24
+
+  - name: 1.1.18 Disable Mounting of cramfs Filesystems (Not Scored)
+    lineinfile: >
+      state=present
+      dest=/etc/modprobe.d/CIS.conf
+      line="install cramfs /bin/true"
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.18
+
+  - name: 1.1.19 Disable Mounting of freevxfs Filesystems (Not Scored)
+    lineinfile: >
+      state=present
+      dest=/etc/modprobe.d/CIS.conf
+      line="install freevxfs /bin/true"
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.19
+
+  - name: 1.1.20 Disable Mounting of jffs2 Filesystems (Not Scored)
+    lineinfile: >
+      state=present
+      dest=/etc/modprobe.d/CIS.conf
+      line="install jffs2 /bin/true"
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.20
+
+  - name: 1.1.21 Disable Mounting of hfs Filesystems (Not Scored)
+    lineinfile: >
+      state=present
+      dest=/etc/modprobe.d/CIS.conf
+      line="install hfs /bin/true"
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.21
+
+  - name: 1.1.22 Disable Mounting of hfsplus Filesystems (Not Scored)
+    lineinfile: >
+      state=present
+      dest=/etc/modprobe.d/CIS.conf
+      line="install hfsplus /bin/true"
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.22
+
+  - name: 1.1.23 Disable Mounting of squashfs Filesystems (Not Scored)
+    lineinfile: >
+      state=present
+      dest=/etc/modprobe.d/CIS.conf
+      line="install squashfs /bin/true"
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.23
+
+  - name: 1.1.24 Disable Mounting of udf Filesystems (Not Scored)
+    lineinfile: >
+      state=present
+      dest=/etc/modprobe.d/CIS.conf
+      line="install udf /bin/true"
+    tags:
+      - notscored
+      - section1.1
+      - section1.1.24
+
+  - name: 1.2.4 Check to see if rhnsd daemon is installed (Not Scored)
+    stat: path=/etc/init.d/rhnsd
+    register: rhnsd_service
+    when: ansible_distribution == "RedHat"
+    tags:
+      - notscored
+      - section1.2
+      - section1.2.4
+
+  - name: 1.2.4 Disable the rhnsd Daemon (Not Scored)
+    action: command /sbin/chkconfig rhnsd off
+    when: ansible_distribution == "RedHat"
+    tags:
+      - notscored
+      - section1.2
+      - section1.2.4
+
+  - name: 1.3.1 Install AIDE (Scored)
+    yum: >
+      name=aide
+      state=present
+    when: configure_aide
+    tags:
+      - scored
+      - section1.3
+      - section1.3.1
+
+  - name: 1.3.1 Install AIDE (Initialize AIDE) (Scored)
+    command: >
+      /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz' 
+      creates=/var/lib/aide/aide.db.gz
+    when: configure_aide
+    tags:
+      - scored
+      - section1.3
+      - section1.3.1
+
+  - name: 1.3.1 Install AIDE (check is prelink installed) (Scored)
+    stat: path=/usr/sbin/prelink
+    register: prelink_stat
+    tags:
+      - scored
+      - section1.3
+      - section1.3.1
+
+  - name: 1.3.1 Install AIDE (Disable Prelinking) (Scored)
+    lineinfile: >
+      state=present
+      dest=/etc/sysconfig/prelink
+      regexp=^PRELINKING=
+      line=PRELINKING=no
+      create=yes
+    when:
+      - configure_aide
+      - prelink_stat.stat.exists
+    tags:
+      - scored
+      - section1.3
+      - section1.3.1
+
+  - name: 1.3.2 Implement Periodic Execution of File Integrity (Scored)
+    cron: >
+      name="Run AIDE (CIS 1.3.2)"
+      minute="0"
+      hour="5"
+      job="/usr/sbin/aide --check"
+    when: configure_aide
+    tags:
+      - scored
+      - section1.3
+      - section1.3.2
+
+  - name: 1.4.1 Enable SELinux in /etc/grub.conf (Scored)
+    lineinfile: >
+      state=absent
+      dest=/etc/grub.conf
+      line="selinux=0"
+    tags:
+      - scored
+      - section1.4
+      - section1.4.1
+
+  - name: 1.4.1 Enable SELinux in /etc/grub.conf (Scored)
+    lineinfile: >
+      state=absent
+      dest=/etc/grub.conf
+      line="enforcing=0"
+    tags:
+      - scored
+      - section1.4
+      - section1.4.1
+
+  - name: 1.4.2 Set the SELinux State (Scored)
+    yum: >
+      name=selinux-policy-targeted
+      state=present
+    tags:
+      - scored
+      - section1.4
+      - section1.4.2
+
+  - name: 1.4.3 Set the SELinux Policy (Scored)
+    selinux: >
+      state=enforcing
+      policy=targeted
+    ignore_errors: yes
+    tags:
+      - scored
+      - section1.4
+      - section1.4.3
+
+  - name: 1.4.4 Remove SETroubleshoot (Scored)
+    yum: >
+      name=setroubleshoot
+      state=absent
+    tags:
+      - scored
+      - section1.4
+      - section1.4.4
+
+  - name: 1.4.5 Remove MCS Translation Service (mcstrans) (Scored)
+    yum: >
+      name=mcstrans
+      state=absent
+    tags:
+      - scored
+      - section1.4
+      - section1.4.5
+
+  - name: 1.4.6 Check for unconfined daemons (Scored)
+    debug: msg="*** Check via cron jobs or manually."
+    tags:
+      - scored
+      - section1.4
+      - section1.4.6

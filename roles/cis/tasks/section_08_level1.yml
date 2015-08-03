@@ -1,0 +1,108 @@
+---
+#
+# Copyright 2014 Major Hayden
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    stat: path=/etc/{{ item }}
+    register: stats
+    with_items:
+      - motd
+      - issue
+      - issue.net
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    file: >
+      name=/etc/motd 
+      state=absent
+    changed_when: false
+    with_items: 
+      - stats.results
+    when: item.islnk is defined
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    file: >
+      name=/etc/issue
+      state=absent
+    changed_when: false
+    with_items: 
+      - stats.results
+    when: item.islnk is defined
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    file: >
+      name=/etc/issue.net
+      state=absent
+    changed_when: false
+    with_items: 
+      - stats.results
+    when: item.islnk is defined
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    copy: >
+      src=etc/{{item}}
+      dest=/etc/{{item}}
+    with_items:
+      - motd
+      - issue
+      - issue.net
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.1 Set Warning Banner for Standard Login Services (Scored)
+    file: >
+      path=/etc/{{ item }}
+      owner=root
+      group=root
+      mode=0644
+    with_items:
+      - motd
+      - issue
+      - issue.net
+    tags:
+      - scored
+      - section8.1
+
+  - name: 8.2 Remove OS Information from Login Warning Banners (Scored)
+    replace: >
+      dest=/etc/{{ item }}
+      regexp='\\r|\\v|\\s' 
+      replace='[CIS replaced]'
+    with_items:
+      - motd
+      - issue
+      - issue.net 
+    tags:
+      - scored
+      - section8.2
+
+  - name: 8.3 Set GNOME Warning Banner (Not Scored)
+    debug: msg="*** Will do later"
+    tags:
+      - scored
+      - section8.3
