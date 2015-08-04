@@ -18,6 +18,7 @@
         networks:
           - private
           - public
+        group: raxhosts
       register: rax
 
     - name: Add new instance to host group
@@ -81,7 +82,10 @@
         key_name: travis-key
         wait: yes
         region: IAD
-        state: absent
+        state: present
+        group: raxhosts
+        count: 0
+        exact_count: yes
         networks:
           - private
           - public
