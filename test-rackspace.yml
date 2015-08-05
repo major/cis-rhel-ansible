@@ -44,6 +44,19 @@
   user: root
   tasks:
 
+    # This is mainly to prevent shenanigans with people trying to hop
+    # into the VM while it's building at travis-ci. ;)
+    - name: Disable ssh authentication with passwords
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^#?PasswordAuthentication"
+        line: "PasswordAuthentication no"
+
+    - name: Restart sshd
+      service:
+        name: sshd
+        state: restarted
+
     - name: Install ansible
       yum:
         name: ansible
