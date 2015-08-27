@@ -1,0 +1,6 @@
+---
+# file: Postgresql-Zabbix.yml
+- hosts: vagrant1
+  sudo: yes
+  roles:
+      - cis-rhel-ansible
