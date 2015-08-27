@@ -1,0 +1,13 @@
+language: python
+python: '2.7'
+sudo: false
+env:
+- PYTHONUNBUFFERED=1
+before_install:
+- echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+install:
+- pip install -U pip
+- pip install ansible
+script:
+- ansible-playbook -i hosts playbook.yml --syntax-check
+- ansible-playbook --private-key=travis-key -v -i test-hosts test-rackspace.yml
