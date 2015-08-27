@@ -15,29 +15,11 @@
 #   limitations under the License.
 #
 
-  - include: section_01.yml
-    tags: section1
+  - name: Reload auditd Rules
+    service: name=auditd state=restarted
 
-  - include: section_02.yml
-    tags: section2
+  - name: Reload prelinking
+    command: /usr/sbin/prelink -ua
 
-  - include: section_03.yml
-    tags: section3
-
-  - include: section_04.yml
-    tags: section4
-
-  - include: section_05.yml
-    tags: section5
-
-  - include: section_06.yml
-    tags: section6
-
-  - include: section_07.yml
-    tags: section7
-
-  - include: section_08.yml
-    tags: section8
-
-  - include: section_09.yml
-    tags: section9
+  - name: Reload sshd
+    service: name=sshd state=restarted

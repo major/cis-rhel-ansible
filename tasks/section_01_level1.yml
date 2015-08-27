@@ -147,7 +147,7 @@
       - section1.2.1
 
   - name: 1.2.2 Verify Red Hat GPG key is installed (Scored)
-    command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release 
+    command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
     when: ansible_distribution == "RedHat"
     tags:
       - scored
@@ -179,44 +179,49 @@
       - section1.2
       - section1.2.6
 
-  - name: 1.5.1 Get Absolute Path to grub.conf
-    command: readlink -f /etc/grub.conf
-    register: readlink
-    changed_when: false
-    always_run: yes
-    tags:
-      - scored
-      - section1.5
-      - section1.5.1
-
   - name: 1.5.1 Set User/Group Owner on /etc/grub.conf (Scored)
-    file: >
-      path={{ readlink.stdout }}
+    file:
+      path=/etc/grub.conf
       owner=root
       group=root
     tags:
       - scored
       - section1.5
       - section1.5.1
+    when: ansible_distribution_major_version == '6'
 
-  - name: 1.5.2 Get Absolute Path to grub.conf
-    command: readlink -f /etc/grub.conf
-    register: readlink
-    changed_when: false
-    always_run: yes
+
+  - name: 1.5.1 Set User/Group Owner on /etc/grub.conf (Scored)
+    file:
+      path=/boot/grub2/grub.cfg
+      owner=root
+      group=root
+    tags:
+      - scored
+      - section1.5
+      - section1.5.1
+    when: ansible_distribution_major_version == '7'
+
+  - name: 1.5.2 Set Permissions on /etc/grub.conf (Scored)
+    file:
+      path=/etc/grub.conf
+      mode=0400
     tags:
       - scored
       - section1.5
       - section1.5.2
+    when: ansible_distribution_major_version == '6'
 
   - name: 1.5.2 Set Permissions on /etc/grub.conf (Scored)
-    file: >
-      path={{ readlink.stdout }}
+    file:
+      path=/boot/grub2/grub.cfg
       mode=0400
     tags:
-      - scored 
+      - scored
       - section1.5
       - section1.5.2
+    when: ansible_distribution_major_version == '7'
+
 
   - name: 1.5.3 Set boot loader password (Scored)
     debug: msg="*** Too destructive for production systems. Evaluate for your environment first."
@@ -273,6 +278,7 @@
       - scored
       - section1.6
       - section1.6.2
+    when: ansible_distribution_major_version == '6'
 
   - name: 1.6.3 Enable Randomized Virtual Memory Region Placement (Scored)
     sysctl: >

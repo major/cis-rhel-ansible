@@ -1,3 +1,0 @@
-[submodule "roles/cis"]
-	path = roles/cis
-	url = git://github.com/major/ansible-role-cis.git
