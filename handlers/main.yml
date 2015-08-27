@@ -16,13 +16,10 @@
 #
 
   - name: Reload auditd Rules
-    command: /usr/bin/pkill -HUP -P 1 auditd
+    service: name=auditd state=restarted
 
   - name: Reload prelinking
     command: /usr/sbin/prelink -ua
 
   - name: Reload sshd
     service: name=sshd state=restarted
-    register: result
-    changed_when: "result.rc == 0"
-    failed_when: "result.rc not in [0, 7]"
