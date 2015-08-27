@@ -9,7 +9,6 @@ before_install:
 install:
   - pip install -U pip
   - pip install ansible
-  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
 script:
   # check the role/playbook for syntax error's.
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
