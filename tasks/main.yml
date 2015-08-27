@@ -14,30 +14,51 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+- name: Unexpected OS
+  debug: msg="OS Family {{ ansible_os_family }} {{ ansible_architecture }} is not supported" fail=yes
+  when: not ansible_os_family == "RedHat"
 
-  - include: section_01.yml
-    tags: section1
+- name: Run Section 01
+  include: section_01.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section1
 
-  - include: section_02.yml
-    tags: section2
+- name: Run Section 02
+  include: section_02.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section2
 
-  - include: section_03.yml
-    tags: section3
+- name: Run Section 03
+  include: section_03.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section3
 
-  - include: section_04.yml
-    tags: section4
+- name: Run Section 04
+  include: section_04.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section4
 
-  - include: section_05.yml
-    tags: section5
+- name: Run Section 05
+  include: section_05.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section5
 
-  - include: section_06.yml
-    tags: section6
+- name: Run Section 06
+  include: section_06.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section6
 
-  - include: section_07.yml
-    tags: section7
+- name: Run Section 07
+  include: section_07.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section7
 
-  - include: section_08.yml
-    tags: section8
+- name: Run Section 08
+  include: section_08.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section8
 
-  - include: section_09.yml
-    tags: section9
+- name: Run Section 09
+  include: section_09.yml
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos")
+  tags: section9
