@@ -2,6 +2,9 @@
 language: python
 python: '2.7'
 
+deploy:
+  dist: "centos/7"
+
 env:
   - PYTHONUNBUFFERED=1
 before_install:
