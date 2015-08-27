@@ -1,6 +1,0 @@
----
-# file: Postgresql-Zabbix.yml
-- hosts: localhost
-  remote_user: root
-  roles:
-      - cis-rhel-ansible

@@ -105,14 +105,32 @@
 
   - name: Make sure grub2 tools are installed
     yum: name=grub2-tools state=present
+    tags:
+      - scored
+      - section5.2
+      - section5.2.3
     when: ansible_distribution_major_version == '7'
 
-  - name: 5.2.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
-    debug: msg="add audit=1 to /etc/default/grub 2 the end of the line GRUB_CMDLINE_LINUX= need more regexp skills to automate this"
-    when: ansible_distribution_major_version == '7'
+        # To fix for rhel 7
+#  - name: 5.2.3 Enable Auditing for Processes That Start Prior to auditd (Scored)
+#    lineinfile:
+#      state=present
+#      dest=/etc/default/grub
+#      backrefs=yes
+#      regexp="(net.ifnames=0)"
+#      line="\1 audit=1"
+#   tags:
+#      - scored
+#      - section5.2
+#      - section5.2.3
+#    when: ansible_distribution_major_version == '7'
 
   - name: Run grub2 config after mods in
     command: grub2-mkconfig -o /boot/grub2/grub.cfg
+    tags:
+      - scored
+      - section5.2
+      - section5.2.3
     when: ansible_distribution_major_version == '7'
 
   - name: 5.2.4 - 5.2.18 Configure auditd Rules (Scored)
