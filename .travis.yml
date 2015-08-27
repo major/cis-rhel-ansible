@@ -1,12 +1,18 @@
+---
 language: python
 python: '2.7'
-sudo: false
+
 env:
-- PYTHONUNBUFFERED=1
+  - PYTHONUNBUFFERED=1
 before_install:
-- echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 install:
-- pip install -U pip
-- pip install ansible
+  - pip install -U pip
+  - pip install ansible
+  - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
 script:
-- ansible-playbook -i hosts playbook.yml --syntax-check
+  # check the role/playbook for syntax error's.
+  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+
+  # Run the role/playbook with ansible-playbook.
+  - "ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo"
