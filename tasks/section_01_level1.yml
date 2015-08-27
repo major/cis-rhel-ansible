@@ -214,7 +214,7 @@
 
   - name: 1.5.2 Set Permissions on /etc/grub.conf (Scored)
     file:
-      path=/boot/grub2/grub.conf
+      path=/boot/grub2/grub.cfg
       mode=0400
     tags:
       - scored
@@ -278,6 +278,7 @@
       - scored
       - section1.6
       - section1.6.2
+    when: ansible_distribution_major_version == '6'
 
   - name: 1.6.3 Enable Randomized Virtual Memory Region Placement (Scored)
     sysctl: >

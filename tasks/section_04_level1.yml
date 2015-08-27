@@ -16,10 +16,12 @@
 #
 
   - name: 4.1.1 Disable IP Forwarding (Scored)
-    sysctl: >
+    sysctl:
+      sysctl_file=/usr/lib/sysctl.d/10-cis.conf
       name=net.ipv4.ip_forward
       value=0
       state=present
+      reload=yes
     tags:
       - scored
       - section4.1
@@ -364,4 +366,4 @@
     tags:
       - notscored
       - section4.8
-      
+
