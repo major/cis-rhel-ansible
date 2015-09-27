@@ -65,6 +65,7 @@
   - name: 7.2 Disable System Accounts (Scored)
     command: /usr/sbin/usermod -s /sbin/nologin {{ item }}
     with_items: enabled_system_accounts.stdout_lines
+    when: disable_system_accounts
     tags:
       - scored
       - section7.2
@@ -88,12 +89,20 @@
       - scored
       - section7.4
 
+  - name: Ensure that /etc/profile.d/cis.sh has correct owner, group and mode (Conditional)
+    stat: path=/etc/profile.d/cis.sh
+    register: cissh_check
+    tags:
+      - scored
+      - section7.4
+
   - name: Ensure that /etc/profile.d/cis.sh has correct owner, group and mode
     file: 
       path=/etc/profile.d/cis.sh 
       owner=root
       group=root
       mode=0644
+    when: cissh_check.stat.exists
     changed_when: false
     tags:
       - scored

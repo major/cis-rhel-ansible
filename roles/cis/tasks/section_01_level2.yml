@@ -176,6 +176,7 @@
       state=absent
       dest=/etc/grub.conf
       line="selinux=0"
+    when: enable_selinux
     tags:
       - scored
       - section1.4
@@ -186,6 +187,7 @@
       state=absent
       dest=/etc/grub.conf
       line="enforcing=0"
+    when: enable_selinux
     tags:
       - scored
       - section1.4
@@ -195,6 +197,7 @@
     yum: >
       name=selinux-policy-targeted
       state=present
+    when: enable_selinux
     tags:
       - scored
       - section1.4
@@ -205,6 +208,7 @@
       state=enforcing
       policy=targeted
     ignore_errors: yes
+    when: enable_selinux
     tags:
       - scored
       - section1.4

@@ -16,7 +16,7 @@
 #
 
 - hosts: all
-  accelerate: true
+  accelerate: "{{accelerate}}"
   user: root
   roles:
-    - cis 
+    - cis
