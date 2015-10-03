@@ -34,6 +34,7 @@
       state=present
       dest=/etc/modprobe.d/CIS.conf
       line="install cramfs /bin/true"
+	  create="yes"
     tags:
       - notscored
       - section1.1
@@ -44,6 +45,7 @@
       state=present
       dest=/etc/modprobe.d/CIS.conf
       line="install freevxfs /bin/true"
+	  create="yes"
     tags:
       - notscored
       - section1.1
@@ -54,6 +56,7 @@
       state=present
       dest=/etc/modprobe.d/CIS.conf
       line="install jffs2 /bin/true"
+	  create="yes"
     tags:
       - notscored
       - section1.1
@@ -64,6 +67,7 @@
       state=present
       dest=/etc/modprobe.d/CIS.conf
       line="install hfs /bin/true"
+	  create="yes"
     tags:
       - notscored
       - section1.1
@@ -74,6 +78,7 @@
       state=present
       dest=/etc/modprobe.d/CIS.conf
       line="install hfsplus /bin/true"
+	  create="yes"
     tags:
       - notscored
       - section1.1
@@ -84,6 +89,7 @@
       state=present
       dest=/etc/modprobe.d/CIS.conf
       line="install squashfs /bin/true"
+	  create="yes"
     tags:
       - notscored
       - section1.1
@@ -94,6 +100,7 @@
       state=present
       dest=/etc/modprobe.d/CIS.conf
       line="install udf /bin/true"
+	  create="yes"
     tags:
       - notscored
       - section1.1
