@@ -2,7 +2,7 @@
 overwrite_pam: yes
 
 #Some companies may want to control these for their own reasons.
-overwrite_motd: yes
+overwrite_banners: yes
 
 #Should we disable system accounts?
 disable_system_accounts: yes
