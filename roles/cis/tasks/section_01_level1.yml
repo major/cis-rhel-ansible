@@ -147,8 +147,11 @@
       - section1.2.1
 
   - name: 1.2.2 Verify Red Hat GPG key is installed (Scored)
-    command: gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release 
+    command: bash -c "gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release | grep '567E 347A D004 4ADE 55BA  8A5F 199E 2F91 FD43 1D51' | wc -l"
     when: ansible_distribution == "RedHat"
+    register: gpgkey
+    failed_when: "'0' in gpgkey.stdout"
+    changed_when: false
     tags:
       - scored
       - section1.2

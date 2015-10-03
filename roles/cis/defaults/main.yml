@@ -1,3 +1,15 @@
+#Overwrite PAM files
+overwrite_pam: yes
+
+#Some companies may want to control these for their own reasons.
+overwrite_banners: yes
+
+#Should we disable system accounts?
+disable_system_accounts: yes
+
+#Should we enable selinux?
+enable_selinux: yes
+
 # Should we configure AIDE on the system? (CIS 1.3)
 # Options:
 #   yes: install and configure AIDE

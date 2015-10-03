@@ -22,6 +22,7 @@
       - motd
       - issue
       - issue.net
+    when: overwrite_banners
     tags:
       - scored
       - section8.1
@@ -33,7 +34,7 @@
     changed_when: false
     with_items: 
       - stats.results
-    when: item.islnk is defined
+    when: item.islnk is defined and overwrite_banners
     tags:
       - scored
       - section8.1
@@ -45,7 +46,7 @@
     changed_when: false
     with_items: 
       - stats.results
-    when: item.islnk is defined
+    when: item.islnk is defined and overwrite_banners
     tags:
       - scored
       - section8.1
@@ -57,7 +58,7 @@
     changed_when: false
     with_items: 
       - stats.results
-    when: item.islnk is defined
+    when: item.islnk is defined and overwrite_banners
     tags:
       - scored
       - section8.1
@@ -70,6 +71,7 @@
       - motd
       - issue
       - issue.net
+    when: overwrite_banners
     tags:
       - scored
       - section8.1
@@ -84,6 +86,7 @@
       - motd
       - issue
       - issue.net
+    when: overwrite_banners
     tags:
       - scored
       - section8.1
@@ -97,6 +100,7 @@
       - motd
       - issue
       - issue.net 
+    when: overwrite_banners
     tags:
       - scored
       - section8.2

@@ -34,12 +34,21 @@
       - section6.1
       - section6.1.2
 
+  - name: 6.1.3 Check for /etc/anacrontab (Conditional)
+    stat: path=/etc/anacrontab
+    register: anacrontab_check
+    tags:
+      - scored
+      - section6.1
+      - section6.1.3
+
   - name: 6.1.3 Set User/Group Owner and Permission on /etc/anacrontab (Scored)
     file: >
       path=/etc/anacrontab
       owner=root
       group=root
       mode=0600
+    when: anacrontab_check.stat.exists
     tags:
       - scored
       - section6.1
@@ -351,6 +360,7 @@
       regexp="^Banner "
       line="Banner /etc/issue.net"
     notify: Reload sshd
+    when: overwrite_banners
     tags:
       - scored
       - section6.2
@@ -364,6 +374,7 @@
   - name: 6.3.1 Upgrade Password Hashing Algorithm to SHA-512 (Scored)
     shell: 'authconfig --test | grep hashing'
     register: password_hash_algorithm
+    changed_when: false
     always_run: yes
     tags:
       - scored
@@ -382,6 +393,7 @@
     copy: >
       src=etc/pam.d/system-auth
       dest=/etc/pam.d/system-auth
+    when: overwrite_pam
     tags:
       - scored
       - section6.3
@@ -393,6 +405,7 @@
     copy: >
       src=etc/pam.d/password-auth
       dest=/etc/pam.d/password-auth
+    when: overwrite_pam
     tags:
       - scored
       - section6.3
@@ -410,6 +423,7 @@
     copy: >
       src=etc/pam.d/su
       dest=/etc/pam.d/su
+    when: overwrite_pam
     tags:
       - scored
       - section6.5
