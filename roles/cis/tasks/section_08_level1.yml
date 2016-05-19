@@ -32,7 +32,7 @@
       state=absent
     changed_when: false
     with_items: 
-      - stats.results
+      - "{{ stats.results }}"
     when: item.islnk is defined
     tags:
       - scored
@@ -44,7 +44,7 @@
       state=absent
     changed_when: false
     with_items: 
-      - stats.results
+      - "{{ stats.results }}"
     when: item.islnk is defined
     tags:
       - scored
@@ -56,7 +56,7 @@
       state=absent
     changed_when: false
     with_items: 
-      - stats.results
+      - "{{ stats.results }}"
     when: item.islnk is defined
     tags:
       - scored
