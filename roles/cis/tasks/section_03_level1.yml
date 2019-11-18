@@ -90,7 +90,6 @@
     yum: >
       pkg=ntp
       state=installed    
-    always_run: yes
     tags:
       - scored
       - section3.6

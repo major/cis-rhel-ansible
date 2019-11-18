@@ -87,17 +87,6 @@
     tags:
       - scored
       - section7.4
-
-  - name: Ensure that /etc/profile.d/cis.sh has correct owner, group and mode
-    file: 
-      path=/etc/profile.d/cis.sh 
-      owner=root
-      group=root
-      mode=0644
-    changed_when: false
-    tags:
-      - scored
-      - section7.4
       
   - name: 7.5 Lock Inactive User Accounts (Scored)
     command: /usr/sbin/useradd -D -f 35

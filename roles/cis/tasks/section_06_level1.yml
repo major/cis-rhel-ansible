@@ -361,23 +361,6 @@
       name: authconfig
       state: present
 
-  - name: 6.3.1 Upgrade Password Hashing Algorithm to SHA-512 (Scored)
-    shell: 'authconfig --test | grep hashing'
-    register: password_hash_algorithm
-    always_run: yes
-    tags:
-      - scored
-      - section6.3
-      - section6.3.1
-
-  - name: 6.3.1 Upgrade Password Hashing Algorithm to SHA-512 (Scored)
-    shell: authconfig --passalgo=sha512 --update
-    when: '"sha512" not in password_hash_algorithm.stdout'
-    tags:
-      - scored
-      - section6.3
-      - section6.3.1
-
   - name: 6.3.2 - 6.3.4 Configure PAM (Scored)
     copy: >
       src=etc/pam.d/system-auth
