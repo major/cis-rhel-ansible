@@ -62,13 +62,6 @@
       - scored
       - section7.2
 
-  - name: 7.2 Disable System Accounts (Scored)
-    command: /usr/sbin/usermod -s /sbin/nologin {{ item }}
-    with_items: enabled_system_accounts.stdout_lines
-    tags:
-      - scored
-      - section7.2
-
   - name: 7.3 Set Default Group for root Account (Scored)
     user: >
       name=root
